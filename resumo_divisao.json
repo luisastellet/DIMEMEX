@@ -1,0 +1,37 @@
+{
+  "total_amostras": 2263,
+  "divisao": {
+    "treino": {
+      "quantidade": 1584,
+      "porcentagem": 69.99558108705259
+    },
+    "validacao": {
+      "quantidade": 452,
+      "porcentagem": 19.97348652231551
+    },
+    "teste": {
+      "quantidade": 227,
+      "porcentagem": 10.030932390631904
+    }
+  },
+  "arquivos": {
+    "train": [
+      "train_data.json",
+      "train_data_translated.json",
+      "train_data_junto.json",
+      "train_labels.csv"
+    ],
+    "validation": [
+      "validation_data.json",
+      "validation_data_translated.json",
+      "validation_data_junto.json",
+      "validation_labels.csv"
+    ],
+    "test": [
+      "test_data.json",
+      "test_data_translated.json",
+      "test_data_junto.json",
+      "test_labels.csv"
+    ]
+  }
+}
