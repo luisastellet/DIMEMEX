@@ -1,0 +1,4 @@
+**/train_labels*.csv
+**/validation_labels*.csv
+**/test_labels*.csv
+**/*_labels.csv
