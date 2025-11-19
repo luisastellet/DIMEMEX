@@ -2,3 +2,6 @@
 **/validation_labels*.csv
 **/test_labels*.csv
 **/*_labels.csv
+**/dados_espanhol.csv
+**/dados_portugues.csv
+gerar_csvs_idiomas.py
