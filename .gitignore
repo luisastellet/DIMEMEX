@@ -6,3 +6,6 @@
 **/dados_portugues.csv
 **/dados_espanhol_balanceado.csv
 gerar_csvs_idiomas.py
+/venv/
+__pycache__/
+*.pyc
