@@ -78,9 +78,9 @@ processor = AutoProcessor.from_pretrained(model_id)
 # Configuração do Modelo
 if USE_QLORA or USE_LORA:
     lora_config = LoraConfig(
-        r=16, 
-        lora_alpha=32, 
-        lora_dropout=0.05,
+        r=8,
+        lora_alpha=16,
+        lora_dropout=0.1,
         target_modules=['down_proj','o_proj','k_proj','q_proj','gate_proj','up_proj','v_proj'],
         init_lora_weights="gaussian",
         inference_mode=False
