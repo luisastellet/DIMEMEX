@@ -22,11 +22,14 @@ import pandas as pd
 import json
 import matplotlib.pyplot as plt
 from datetime import datetime
+from sklearn.metrics import classification_report, accuracy_score, f1_score, precision_score, recall_score
+from tqdm import tqdm
+import time
 
 # Hiperparâmetros de Treino 
-BATCH_SIZE = 2
-EPOCHS = 6
-LR = 2e-5
+BATCH_SIZE = 8
+EPOCHS = 8
+LR = 1e-3
 EVAL_STEPS = 50  # Avalia, salva e loga a cada 50 passos
 
 USE_LORA = False
@@ -75,7 +78,9 @@ processor = AutoProcessor.from_pretrained(model_id)
 # Configuração do Modelo
 if USE_QLORA or USE_LORA:
     lora_config = LoraConfig(
-        r=8, lora_alpha=8, lora_dropout=0.1,
+        r=16, 
+        lora_alpha=32, 
+        lora_dropout=0.05,
         target_modules=['down_proj','o_proj','k_proj','q_proj','gate_proj','up_proj','v_proj'],
         init_lora_weights="gaussian",
         inference_mode=False
@@ -222,7 +227,12 @@ trainer = Trainer(
 )
 
 print(f"🚀 Iniciando treinamento! Log em: {log_txt_path}")
+training_start_time = time.time()
 train_result = trainer.train()
+training_end_time = time.time()
+training_duration = training_end_time - training_start_time
+
+print(f"\n⏱️  Tempo total de treinamento: {training_duration/60:.2f} minutos ({training_duration:.2f} segundos)")
 
 # Salvamento Final e Gráficos Completos 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -283,6 +293,138 @@ with open(os.path.join(final_output_dir, "training_summary.json"), "w") as f:
 
 with open(os.path.join(final_output_dir, "full_history.json"), "w") as f:
     json.dump(history, f, indent=4)
+
+print(f"{'='*50}")
+print("📊 Gerando Classification Report no dataset de VALIDAÇÃO...")
+print(f"{'='*50}\n")
+
+# Função para fazer predições
+def predict_single_sample(image_path, label_text):
+    """Faz predição em uma única imagem"""
+    try:
+        image = Image.open(image_path).convert("RGB")
+        prompt = "Clasifique este meme: hate speech, inappropriate content o neither."
+        
+        messages = [
+            {
+                "role": "user",
+                "content": [
+                    {"type": "image"},
+                    {"type": "text", "text": prompt}
+                ]
+            }
+        ]
+        
+        text = processor.apply_chat_template(messages, add_generation_prompt=True)
+        inputs = processor(text=text, images=[image], return_tensors="pt")
+        inputs = {k: v.to(model.device) for k, v in inputs.items()}
+        
+        with torch.no_grad():
+            outputs = model.generate(
+                **inputs,
+                max_new_tokens=15,
+                do_sample=False,
+                num_beams=1,
+                pad_token_id=processor.tokenizer.pad_token_id
+            )
+        
+        generated_ids = outputs[0][inputs['input_ids'].shape[1]:]
+        response = processor.decode(generated_ids, skip_special_tokens=True).strip().lower()
+        
+        # Mapear resposta
+        if "hate speech" in response or "hate" in response:
+            return "hate speech"
+        elif "inappropriate" in response:
+            return "inappropriate content"
+        elif "neither" in response:
+            return "neither"
+        else:
+            return response  # Retorna resposta bruta se não mapear
+            
+    except Exception as e:
+        print(f"Erro ao processar {image_path}: {e}")
+        return "error"
+
+# Fazer predições no conjunto de validação
+print("🔮 Gerando predições no dataset de validação...")
+predictions = []
+true_labels = []
+
+for idx in tqdm(range(len(ds_val)), desc="Validação"):
+    row = df_val.iloc[idx]
+    pred = predict_single_sample(row['image_path'], row['label'])
+    predictions.append(pred)
+    true_labels.append(row['label'])
+
+# Filtrar predições válidas
+valid_labels = ["hate speech", "inappropriate content", "neither"]
+valid_indices = [i for i, p in enumerate(predictions) if p in valid_labels]
+
+if len(valid_indices) < len(predictions):
+    print(f"\n⚠️  {len(predictions) - len(valid_indices)} predições inválidas removidas")
+    predictions = [predictions[i] for i in valid_indices]
+    true_labels = [true_labels[i] for i in valid_indices]
+
+# Gerar classification report
+print("\n" + "="*70)
+print("CLASSIFICATION REPORT - VALIDAÇÃO")
+print("="*70 + "\n")
+
+report_text = classification_report(
+    true_labels, 
+    predictions, 
+    labels=valid_labels,
+    target_names=valid_labels,
+    digits=4,
+    zero_division=0
+)
+
+print(report_text)
+
+# Métricas resumidas
+metrics_summary = {
+    "accuracy": accuracy_score(true_labels, predictions),
+    "f1_weighted": f1_score(true_labels, predictions, labels=valid_labels, average='weighted', zero_division=0),
+    "f1_macro": f1_score(true_labels, predictions, labels=valid_labels, average='macro', zero_division=0),
+    "precision_weighted": precision_score(true_labels, predictions, labels=valid_labels, average='weighted', zero_division=0),
+    "recall_weighted": recall_score(true_labels, predictions, labels=valid_labels, average='weighted', zero_division=0),
+    "total_samples": len(true_labels),
+    "training_duration_seconds": training_duration,
+    "training_duration_minutes": training_duration / 60
+}
+
+print("\nSummary Metrics:")
+print(json.dumps(metrics_summary, indent=4))
+
+# Salvar classification report
+report_file = os.path.join(final_output_dir, "classification_report_validation.txt")
+with open(report_file, 'w') as f:
+    f.write("="*70 + "\n")
+    f.write("CLASSIFICATION REPORT - VALIDATION SET\n")
+    f.write("="*70 + "\n\n")
+    f.write(report_text)
+    f.write("\n\nSummary Metrics:\n")
+    f.write(json.dumps(metrics_summary, indent=4))
+    f.write(f"\n\nTraining Duration: {training_duration/60:.2f} minutes\n")
+
+print(f"\n✅ Classification report salvo em: {report_file}")
+
+# Salvar predições detalhadas
+predictions_df = pd.DataFrame({
+    'image_path': [df_val.iloc[i]['image_path'] for i in valid_indices],
+    'true_label': true_labels,
+    'predicted_label': predictions,
+    'correct': [t == p for t, p in zip(true_labels, predictions)]
+})
+
+predictions_file = os.path.join(final_output_dir, "validation_predictions.csv")
+predictions_df.to_csv(predictions_file, index=False)
+print(f"✅ Predições detalhadas salvas em: {predictions_file}")
+
+# Atualizar summary com métricas de classificação
+summary["classification_metrics"] = metrics_summary
+with open(os.path.join(final_output_dir, "training_summary.json"), "w") as f:
+    json.dump(summary, f, indent=4)
 
 print(f"{'='*50}")
 print(f"✅ Treinamento finalizado com sucesso!")
