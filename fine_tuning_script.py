@@ -6,6 +6,8 @@ import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 import torch
+import torch.nn as nn
+import torch.nn.functional as F
 from peft import LoraConfig, prepare_model_for_kbit_training, get_peft_model
 from transformers import (
     AutoProcessor, 
@@ -34,6 +36,9 @@ EVAL_STEPS = 50  # Avalia, salva e loga a cada 50 passos
 
 USE_LORA = False
 USE_QLORA = True
+USE_FOCAL_LOSS = True  # Ativar Focal Loss
+FOCAL_ALPHA = 0.25     # Peso para balanceamento de classes
+FOCAL_GAMMA = 2.0      # Foco em exemplos difíceis (quanto maior, mais foco)
 
 model_id = "HuggingFaceTB/SmolVLM-256M-Instruct"
 
@@ -182,6 +187,29 @@ class FileLoggingCallback(TrainerCallback):
             with open(self.log_path, 'a') as f:
                 f.write(log_str)
 
+# Custom Trainer com Focal Loss
+class FocalLossTrainer(Trainer):
+    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        """
+        Sobrescreve compute_loss para usar Focal Loss
+        """
+        labels = inputs.pop("labels")
+        outputs = model(**inputs)
+        logits = outputs.logits
+        
+        # Focal Loss implementation
+        ce_loss = F.cross_entropy(
+            logits.view(-1, logits.size(-1)), 
+            labels.view(-1), 
+            reduction='none',
+            ignore_index=-100
+        )
+        
+        pt = torch.exp(-ce_loss)
+        focal_loss = (FOCAL_ALPHA * (1 - pt) ** FOCAL_GAMMA * ce_loss).mean()
+        
+        return (focal_loss, outputs) if return_outputs else focal_loss
+
 training_args = TrainingArguments(
     num_train_epochs=EPOCHS,                 
     per_device_train_batch_size=BATCH_SIZE,  
@@ -214,7 +242,10 @@ training_args = TrainingArguments(
 
 log_txt_path = os.path.join(output_dir_checkpoints, "training_progress_log.txt")
 
-trainer = Trainer(
+# Escolher o Trainer apropriado
+TrainerClass = FocalLossTrainer if USE_FOCAL_LOSS else Trainer
+
+trainer = TrainerClass(
     model=model,
     args=training_args,
     data_collator=collate_fn,
@@ -284,7 +315,10 @@ summary = {
         "batch_size": BATCH_SIZE,
         "epochs": EPOCHS,
         "lr": LR,
-        "lora": USE_LORA or USE_QLORA
+        "lora": USE_LORA or USE_QLORA,
+        "focal_loss": USE_FOCAL_LOSS,
+        "focal_alpha": FOCAL_ALPHA if USE_FOCAL_LOSS else None,
+        "focal_gamma": FOCAL_GAMMA if USE_FOCAL_LOSS else None
     }
 }
 
