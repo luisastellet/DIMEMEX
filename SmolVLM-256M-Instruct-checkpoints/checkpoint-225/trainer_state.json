@@ -1,10 +1,10 @@
 {
-  "best_global_step": 150,
-  "best_metric": 1.0384736061096191,
-  "best_model_checkpoint": "./SmolVLM-256M-Instruct-checkpoints/checkpoint-150",
-  "epoch": 3.262295081967213,
+  "best_global_step": 225,
+  "best_metric": 0.9436789751052856,
+  "best_model_checkpoint": "./SmolVLM-256M-Instruct-checkpoints/checkpoint-225",
+  "epoch": 4.896174863387978,
   "eval_steps": 25,
-  "global_step": 150,
+  "global_step": 225,
   "is_hyper_param_search": false,
   "is_local_process_zero": true,
   "is_world_process_zero": true,
@@ -98,6 +98,51 @@
       "eval_samples_per_second": 4.171,
       "eval_steps_per_second": 0.531,
       "step": 150
+    },
+    {
+      "epoch": 3.808743169398907,
+      "grad_norm": 0.318359375,
+      "learning_rate": 0.00012473065005542155,
+      "loss": 1.0001,
+      "step": 175
+    },
+    {
+      "epoch": 3.808743169398907,
+      "eval_loss": 0.9953891038894653,
+      "eval_runtime": 77.2151,
+      "eval_samples_per_second": 4.17,
+      "eval_steps_per_second": 0.531,
+      "step": 175
+    },
+    {
+      "epoch": 4.3497267759562845,
+      "grad_norm": 0.30078125,
+      "learning_rate": 8.049096779838719e-05,
+      "loss": 0.953,
+      "step": 200
+    },
+    {
+      "epoch": 4.3497267759562845,
+      "eval_loss": 0.9626703858375549,
+      "eval_runtime": 77.6883,
+      "eval_samples_per_second": 4.145,
+      "eval_steps_per_second": 0.528,
+      "step": 200
+    },
+    {
+      "epoch": 4.896174863387978,
+      "grad_norm": 0.296875,
+      "learning_rate": 4.007223334886531e-05,
+      "loss": 0.9297,
+      "step": 225
+    },
+    {
+      "epoch": 4.896174863387978,
+      "eval_loss": 0.9436789751052856,
+      "eval_runtime": 77.7882,
+      "eval_samples_per_second": 4.139,
+      "eval_steps_per_second": 0.527,
+      "step": 225
     }
   ],
   "logging_steps": 25,
@@ -126,7 +171,7 @@
       "attributes": {}
     }
   },
-  "total_flos": 1.0003733891407872e+16,
+  "total_flos": 1.5024611972595456e+16,
   "train_batch_size": 8,
   "trial_name": null,
   "trial_params": null
