@@ -1,0 +1,323 @@
+image_path,true_label,predicted_label,correct
+validation_images/DS_IMG_2498.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_178.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_445.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1960.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1294.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_707.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_865.jpg,neither,hate speech,False
+validation_images/DS_IMG_996.jpg,neither,hate speech,False
+validation_images/DS_IMG_551.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_163.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_190.jpg,neither,hate speech,False
+validation_images/DS_IMG_505.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3115.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3241.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_844.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_872.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1425.jpg,neither,hate speech,False
+validation_images/DS_IMG_177.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_444.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1347.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1411.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2188.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2316.jpg,hate speech,inappropriate content,False
+validation_images/DS_IMG_2342.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1909.jpg,neither,hate speech,False
+validation_images/DS_IMG_1173.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_662.jpg,neither,hate speech,False
+validation_images/DS_IMG_1167.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_448.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_951.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_378.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_87.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3294.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2993.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3166.jpg,neither,hate speech,False
+validation_images/DS_IMG_358.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2205.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1867.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_894.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2603.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2517.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_943.jpg,neither,hate speech,False
+validation_images/DS_IMG_499.jpg,neither,hate speech,False
+validation_images/DS_IMG_3196.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2358.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1432.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1742.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_433.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2611.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_332.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2020.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1652.jpg,neither,hate speech,False
+validation_images/DS_IMG_258.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1212.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3016.jpg,neither,hate speech,False
+validation_images/DS_IMG_331.jpg,neither,hate speech,False
+validation_images/DS_IMG_1386.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2187.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1682.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3022.jpg,neither,hate speech,False
+validation_images/DS_IMG_1308.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2728.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2614.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1287.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2192.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_117.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_924.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1339.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2987.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3152.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2608.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_415.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2975.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3083.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1334.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1232.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3239.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_568.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1037.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1204.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2458.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2214.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1762.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_297.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2777.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3199.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1986.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1206.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2309.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_394.jpg,neither,hate speech,False
+validation_images/DS_IMG_336.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_917.jpg,neither,hate speech,False
+validation_images/DS_IMG_863.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_694.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1587.jpg,neither,hate speech,False
+validation_images/DS_IMG_130.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1857.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_983.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2836.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_360.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_840.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1631.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1796.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2366.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2705.jpg,neither,hate speech,False
+validation_images/DS_IMG_573.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1747.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_858.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2698.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2414.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2623.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1913.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2600.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2472.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1921.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1470.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2568.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2682.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1701.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1645.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2726.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1352.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1592.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2535.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3165.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3279.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_632.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_659.jpg,neither,hate speech,False
+validation_images/DS_IMG_1121.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2964.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1675.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_243.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2120.jpg,neither,hate speech,False
+validation_images/DS_IMG_410.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2609.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_648.jpg,neither,hate speech,False
+validation_images/DS_IMG_3041.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2581.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2513.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_304.jpg,neither,hate speech,False
+validation_images/DS_IMG_230.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_2793.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_964.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1933.jpg,neither,hate speech,False
+validation_images/DS_IMG_478.jpg,neither,hate speech,False
+validation_images/DS_IMG_260.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1107.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1660.jpg,neither,hate speech,False
+validation_images/DS_IMG_285.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_891.jpg,neither,hate speech,False
+validation_images/DS_IMG_510.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_2937.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2939.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2795.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3133.jpg,neither,hate speech,False
+validation_images/DS_IMG_1078.jpg,neither,hate speech,False
+validation_images/DS_IMG_1166.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3190.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2829.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_734.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1604.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1391.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_421.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1907.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1755.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2242.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_624.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3246.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2281.jpg,neither,hate speech,False
+validation_images/DS_IMG_52.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2269.jpg,neither,hate speech,False
+validation_images/DS_IMG_465.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1854.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2804.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_698.jpg,neither,hate speech,False
+validation_images/DS_IMG_1168.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1845.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2335.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1722.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2654.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1364.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3000.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3206.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2669.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3068.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1074.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_237.jpg,neither,hate speech,False
+validation_images/DS_IMG_848.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_794.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1737.jpg,neither,hate speech,False
+validation_images/DS_IMG_455.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2496.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2891.jpg,neither,hate speech,False
+validation_images/DS_IMG_62.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1691.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3278.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2857.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2898.jpg,neither,hate speech,False
+validation_images/DS_IMG_1804.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1148.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2320.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2978.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_563.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1049.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1702.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2449.jpg,neither,hate speech,False
+validation_images/DS_IMG_1785.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2396.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1372.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_176.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_864.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1069.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1176.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2216.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1987.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2266.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_639.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_676.jpg,neither,hate speech,False
+validation_images/DS_IMG_1081.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2648.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2122.jpg,neither,hate speech,False
+validation_images/DS_IMG_133.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2954.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_638.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_752.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1272.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1177.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_146.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2400.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3173.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3187.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1289.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1201.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2168.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_572.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3208.jpg,neither,hate speech,False
+validation_images/DS_IMG_2575.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1688.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3180.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_3010.jpg,neither,hate speech,False
+validation_images/DS_IMG_1101.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_403.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2977.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1818.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2620.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_31.jpg,neither,hate speech,False
+validation_images/DS_IMG_467.jpg,neither,hate speech,False
+validation_images/DS_IMG_877.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2160.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_673.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1110.jpg,neither,hate speech,False
+validation_images/DS_IMG_140.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3135.jpg,neither,hate speech,False
+validation_images/DS_IMG_6.jpg,neither,hate speech,False
+validation_images/DS_IMG_223.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_67.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3139.jpg,neither,hate speech,False
+validation_images/DS_IMG_962.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1683.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_717.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_774.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_946.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2402.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2657.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_383.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_841.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2093.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1996.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1570.jpg,neither,hate speech,False
+validation_images/DS_IMG_1360.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_204.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1547.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1564.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1847.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1984.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2877.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2592.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_688.jpg,neither,hate speech,False
+validation_images/DS_IMG_578.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2725.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_492.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1721.jpg,neither,hate speech,False
+validation_images/DS_IMG_569.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_816.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_611.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2966.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2113.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2724.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2293.jpg,neither,hate speech,False
+validation_images/DS_IMG_278.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_2779.jpg,neither,hate speech,False
+validation_images/DS_IMG_3042.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1397.jpg,neither,hate speech,False
+validation_images/DS_IMG_388.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_2378.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2914.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1441.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1362.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3192.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_2632.jpg,neither,hate speech,False
+validation_images/DS_IMG_2138.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1090.jpg,neither,hate speech,False
+validation_images/DS_IMG_100.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_614.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_944.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2151.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1692.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2703.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_497.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3291.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1519.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_671.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1390.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2894.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1811.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_3160.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1931.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2229.jpg,inappropriate content,hate speech,False
+validation_images/DS_IMG_1760.jpg,neither,hate speech,False
+validation_images/DS_IMG_26.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_2693.jpg,hate speech,hate speech,True
+validation_images/DS_IMG_1694.jpg,hate speech,hate speech,True

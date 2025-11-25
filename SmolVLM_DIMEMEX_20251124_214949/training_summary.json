@@ -1,0 +1,17 @@
+{
+    "model_id": "HuggingFaceTB/SmolVLM-256M-Instruct",
+    "training_duration_seconds": 182.30787682533264,
+    "training_duration_minutes": 3.038464613755544,
+    "num_train_samples": 1458,
+    "num_val_samples": 322,
+    "batch_size": 8,
+    "epochs": 6,
+    "use_lora": false,
+    "use_qlora": true,
+    "classification_metrics": {
+        "accuracy": 0.2523364485981308,
+        "f1_weighted": 0.2353253460900157,
+        "total_samples": 321,
+        "training_duration_minutes": 3.038464613755544
+    }
+}
