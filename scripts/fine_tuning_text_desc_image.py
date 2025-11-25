@@ -2,12 +2,9 @@
 # !pip install flash-attn --no-build-isolation
 
 import os
-# Garante que o script veja apenas 1 GPU para evitar erro de DataParallel com QLoRA
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 from peft import LoraConfig, prepare_model_for_kbit_training, get_peft_model
 from transformers import (
     AutoProcessor, 
@@ -30,15 +27,12 @@ import time
 
 # Hiperparâmetros de Treino 
 BATCH_SIZE = 8
-EPOCHS = 8
-LR = 1e-3
-EVAL_STEPS = 50  # Avalia, salva e loga a cada 50 passos
+EPOCHS = 6
+LR = 2e-4
+EVAL_STEPS = 25  
 
 USE_LORA = False
 USE_QLORA = True
-USE_FOCAL_LOSS = True  # Ativar Focal Loss
-FOCAL_ALPHA = 0.25     # Peso para balanceamento de classes
-FOCAL_GAMMA = 2.0      # Foco em exemplos difíceis (quanto maior, mais foco)
 
 model_id = "HuggingFaceTB/SmolVLM-256M-Instruct"
 
@@ -83,9 +77,9 @@ processor = AutoProcessor.from_pretrained(model_id)
 # Configuração do Modelo
 if USE_QLORA or USE_LORA:
     lora_config = LoraConfig(
-        r=8,
-        lora_alpha=16,
-        lora_dropout=0.1,
+        r=16,
+        lora_alpha=32,
+        lora_dropout=0.3,
         target_modules=['down_proj','o_proj','k_proj','q_proj','gate_proj','up_proj','v_proj'],
         init_lora_weights="gaussian",
         inference_mode=False
@@ -133,15 +127,29 @@ image_token_id = processor.tokenizer.additional_special_tokens_ids[
 def collate_fn(examples):
     texts = []
     images = []
-    prompt = "Clasifique este meme: hate speech, inappropriate content o neither."
+
+    prompt_espanhol = (
+        "Analice la IMAGEN, el TEXTO VISUAL y la DESCRIPCIÓN CONTEXTUAL."
+        "Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
+    )
 
     for example in examples:
+        answer = str(example["label"]) 
+        texto_visual = example["text"]
+        texto_contexto = example["description"]
         image = example["image"]
+
         if image.mode != 'RGB': image = image.convert('RGB')
         answer = str(example["label"]) 
 
+        prompt_completo = (
+        f"{prompt_espanhol}\n"
+        f"TEXTO VISUAL: '{texto_visual}'\n"
+        f"DESCRIPCIÓN CONTEXTUAL: '{texto_contexto}'"
+    )
+
         messages = [
-            {"role": "user", "content": [{"type": "image"}, {"type": "text", "text": prompt}]},
+            {"role": "user", "content": [{"type": "image"}, {"type": "text", "text": prompt_completo}]},
             {"role": "assistant", "content": [{"type": "text", "text": answer}]}
         ]
         
@@ -187,29 +195,6 @@ class FileLoggingCallback(TrainerCallback):
             with open(self.log_path, 'a') as f:
                 f.write(log_str)
 
-# Custom Trainer com Focal Loss
-class FocalLossTrainer(Trainer):
-    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
-        """
-        Sobrescreve compute_loss para usar Focal Loss
-        """
-        labels = inputs.pop("labels")
-        outputs = model(**inputs)
-        logits = outputs.logits
-        
-        # Focal Loss implementation
-        ce_loss = F.cross_entropy(
-            logits.view(-1, logits.size(-1)), 
-            labels.view(-1), 
-            reduction='none',
-            ignore_index=-100
-        )
-        
-        pt = torch.exp(-ce_loss)
-        focal_loss = (FOCAL_ALPHA * (1 - pt) ** FOCAL_GAMMA * ce_loss).mean()
-        
-        return (focal_loss, outputs) if return_outputs else focal_loss
-
 training_args = TrainingArguments(
     num_train_epochs=EPOCHS,                 
     per_device_train_batch_size=BATCH_SIZE,  
@@ -229,10 +214,13 @@ training_args = TrainingArguments(
     metric_for_best_model="eval_loss", 
     greater_is_better=False,
 
-    warmup_steps=50,
-    weight_decay=0.01,
-    save_total_limit=1, 
+    warmup_steps=100,
+    weight_decay=0.05,
+    save_total_limit=3, 
     optim="paged_adamw_8bit",
+    lr_scheduler_type="cosine",
+    max_grad_norm=1.0,
+    seed=42,
     bf16=True,
     output_dir=output_dir_checkpoints,
     report_to="tensorboard",
@@ -242,17 +230,14 @@ training_args = TrainingArguments(
 
 log_txt_path = os.path.join(output_dir_checkpoints, "training_progress_log.txt")
 
-# Escolher o Trainer apropriado
-TrainerClass = FocalLossTrainer if USE_FOCAL_LOSS else Trainer
-
-trainer = TrainerClass(
+trainer = Trainer(
     model=model,
     args=training_args,
     data_collator=collate_fn,
     train_dataset=ds_train,
     eval_dataset=ds_val, 
     callbacks=[
-        EarlyStoppingCallback(early_stopping_patience=3, early_stopping_threshold=0.01),
+        EarlyStoppingCallback(early_stopping_patience=2),
         FileLoggingCallback(log_txt_path)
     ]
 )
@@ -267,7 +252,7 @@ print(f"\n⏱️  Tempo total de treinamento: {training_duration/60:.2f} minutos
 
 # Salvamento Final e Gráficos Completos 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-final_output_dir = f"./SmolVLM_DIMEMEX_{timestamp}"
+final_output_dir = f"FT_image/SmolVLM_DIMEMEX_{timestamp}"
 os.makedirs(final_output_dir, exist_ok=True)
 
 print(f"💾 Salvando modelo final em {final_output_dir}...")
@@ -316,9 +301,6 @@ summary = {
         "epochs": EPOCHS,
         "lr": LR,
         "lora": USE_LORA or USE_QLORA,
-        "focal_loss": USE_FOCAL_LOSS,
-        "focal_alpha": FOCAL_ALPHA if USE_FOCAL_LOSS else None,
-        "focal_gamma": FOCAL_GAMMA if USE_FOCAL_LOSS else None
     }
 }
 
@@ -333,20 +315,30 @@ print("📊 Gerando Classification Report no dataset de VALIDAÇÃO...")
 print(f"{'='*50}\n")
 
 # Função para fazer predições
-def predict_single_sample(image_path, label_text):
+def predict_single_sample(image_path, row):
     """Faz predição em uma única imagem"""
     try:
         image = Image.open(image_path).convert("RGB")
-        prompt = "Clasifique este meme: hate speech, inappropriate content o neither."
+
+        if image.mode != 'RGB': image = image.convert('RGB')
+        answer = str(row["label"]) 
+
+        texto_visual = row["text"]
+        texto_contexto = row["description"]
         
+        prompt_espanhol = (
+            "Analice la IMAGEN, el TEXTO VISUAL y la DESCRIPCIÓN CONTEXTUAL."
+            "Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
+        )
+
+        prompt_completo = (
+            f"{prompt_espanhol}\n"
+            f"TEXTO VISUAL: '{texto_visual}'\n"
+            f"DESCRIPCIÓN CONTEXTUAL: '{texto_contexto}'"
+        )
+
         messages = [
-            {
-                "role": "user",
-                "content": [
-                    {"type": "image"},
-                    {"type": "text", "text": prompt}
-                ]
-            }
+            {"role": "user", "content": [{"type": "image"}, {"type": "text", "text": prompt_completo}]},
         ]
         
         text = processor.apply_chat_template(messages, add_generation_prompt=True)
@@ -386,7 +378,7 @@ true_labels = []
 
 for idx in tqdm(range(len(ds_val)), desc="Validação"):
     row = df_val.iloc[idx]
-    pred = predict_single_sample(row['image_path'], row['label'])
+    pred = predict_single_sample(row['image_path'], row)
     predictions.append(pred)
     true_labels.append(row['label'])
 

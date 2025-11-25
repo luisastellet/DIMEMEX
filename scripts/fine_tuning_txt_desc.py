@@ -24,36 +24,47 @@ from sklearn.metrics import classification_report, accuracy_score, f1_score, pre
 from tqdm import tqdm
 import time
 
-# Hiperparâmetros de Treino 
+# Hiperparâmetros de Treino
 BATCH_SIZE = 8
 EPOCHS = 6
 LR = 2e-4
 EVAL_STEPS = 25
 
 USE_LORA = False
-USE_QLORA = True
+USE_QLORA = True 
 
 model_id = "HuggingFaceTB/SmolVLM-256M-Instruct"
 
-# === Caminhos ===
+# === Caminhos dos Dados ===
 CSV_TRAIN = "train/dados_espanhol_balanceado.csv"
 CSV_VAL   = "validation/dados_espanhol.csv"
 CSV_TEST  = "test/dados_espanhol.csv"
 
-TRAIN_IMAGES_DIR = "train_images"
-VAL_IMAGES_DIR   = "validation_images"
-TEST_IMAGES_DIR  = "test_images"
-
-# Carregamento de Dados 
+# --- Carregamento e Preparação dos Dados (SOMENTE TEXTO) ---
 print("📊 Carregando datasets...")
 df_train = pd.read_csv(CSV_TRAIN)
 df_val   = pd.read_csv(CSV_VAL)
 df_test  = pd.read_csv(CSV_TEST)
 
-ds_train = Dataset.from_pandas(df_train[["text", "label"]].reset_index(drop=True))
-ds_val = Dataset.from_pandas(df_val[["text", "label"]].reset_index(drop=True))
-print("✅ Datasets prontos!")
+# Garantir que as colunas de texto existam (se não existirem, são preenchidas com placeholder)
+def prepare_text_columns(df):
+    if "text" not in df.columns:
+        df["text"] = "TEXTO VISUAL AUSENTE"
+    if "description" not in df.columns:
+        df["description"] = "DESCRIPCIÓN CONTEXTUAL AUSENTE"
+    return df
 
+df_train = prepare_text_columns(df_train)
+df_val = prepare_text_columns(df_val)
+df_test = prepare_text_columns(df_test)
+
+# Os datasets agora contêm as colunas 'text' e 'description'
+ds_train = Dataset.from_pandas(df_train.reset_index(drop=True))
+ds_val = Dataset.from_pandas(df_val.reset_index(drop=True))
+df_test_data = df_test.reset_index(drop=True)
+
+print(f"✅ Datasets prontos. Usando colunas 'text' e 'description' separadamente.")
+    
 processor = AutoProcessor.from_pretrained(model_id)
 
 # Configuração do Modelo
@@ -79,7 +90,6 @@ if USE_QLORA or USE_LORA:
     model = Idefics3ForConditionalGeneration.from_pretrained(
         model_id,
         quantization_config=bnb_config,
-        _attn_implementation="flash_attention_2",
         device_map={"": 0} 
     )
     
@@ -89,35 +99,37 @@ if USE_QLORA or USE_LORA:
     model = get_peft_model(model, lora_config)
 
     print("🔄 Forçando camadas LoRA para a GPU...")
-    for name, module in model.named_modules():
-        if "lora_" in name:
-            module.to("cuda")
-            
     dtype_to_use = torch.bfloat16 if torch.cuda.is_bf16_supported() else torch.float16
     for name, param in model.named_parameters():
         if "lora" in name and param.requires_grad:
-            param.data = param.data.to(device="cuda", dtype=dtype_to_use)
+            param.data = param.data.to(device="cuda:0", dtype=dtype_to_use)
 else:
     model = Idefics3ForConditionalGeneration.from_pretrained(
-        model_id, torch_dtype=torch.bfloat16, _attn_implementation="flash_attention_2", device_map="auto"
+        model_id, torch_dtype=torch.bfloat16, _attn_implementation="flash_attention_2",
+        device_map="auto"
     )
 
-# Collate Function
+
+# Collate Function 
 def collate_fn(examples):
     texts = []
-
+    
+    # Prompt de raciocínio em espanhol
     prompt_espanhol = (
-        "Analice el TEXTO VISUAL."
+        "Analice el TEXTO VISUAL y la DESCRIPCIÓN CONTEXTUAL."
         "Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
     )
 
     for example in examples:
-        text_content = example["text"]
         answer = str(example["label"]) 
+        texto_visual = example["text"]
+        texto_contexto = example["description"]
 
+        # Mensagens no formato de chat (SEM O TOKEN DE IMAGEM)
         prompt_completo = (
             f"{prompt_espanhol}\n"
-            f"TEXTO VISUAL: '{text_content}'"
+            f"TEXTO VISUAL: '{texto_visual}'\n"
+            f"DESCRIPCIÓN CONTEXTUAL: '{texto_contexto}'"
         )
         messages = [
             {"role": "user", "content": [{"type": "text", "text": prompt_completo}]},
@@ -127,15 +139,18 @@ def collate_fn(examples):
         text = processor.apply_chat_template(messages, add_generation_prompt=False)
         texts.append(text.strip())
 
+    # Chamada do processador APENAS com o texto, e 'images=None'
     batch = processor(text=texts, images=None, return_tensors="pt", padding=True)
+    
     labels = batch["input_ids"].clone()
     labels[labels == processor.tokenizer.pad_token_id] = -100
+    
     batch["labels"] = labels
     return batch
 
-# Callbacks e Configuração de Treino 
+# --- Callbacks e Configuração de Treino ---
 model_name = model_id.split("/")[-1]
-output_dir_checkpoints = f"./{model_name}-checkpoints"
+output_dir_checkpoints = f"./{model_name}-checkpoints_separated_text"
 os.makedirs(output_dir_checkpoints, exist_ok=True)
 
 # Callback para logar em arquivo txt
@@ -154,7 +169,6 @@ class FileLoggingCallback(TrainerCallback):
             lr = logs.get("learning_rate", "N/A")
             epoch = logs.get("epoch", "N/A")
             
-            # Monta string dependendo do que tem no log (treino ou validação)
             log_str = f"[Epoch: {epoch:.2f}] [Step: {step}] "
             if loss != "N/A": log_str += f"Train Loss: {loss:.4f} "
             if eval_loss != "N/A": log_str += f"| Val Loss: {eval_loss:.4f} "
@@ -180,7 +194,7 @@ training_args = TrainingArguments(
 
     # Early Stopping Config
     load_best_model_at_end=True, 
-    metric_for_best_model="eval_loss",
+    metric_for_best_model="eval_loss", 
     greater_is_better=False,
 
     warmup_steps=100,
@@ -219,19 +233,29 @@ training_duration = training_end_time - training_start_time
 
 print(f"\n⏱️  Tempo total de treinamento: {training_duration/60:.2f} minutos ({training_duration:.2f} segundos)")
 
-# Salvamento Final e Gráficos Completos 
+# Inicializa o dicionário summary para coletar métricas/metadata do treinamento
+summary = {
+    "model_id": model_id,
+    "training_duration_seconds": training_duration,
+    "training_duration_minutes": training_duration / 60,
+    "num_train_samples": len(df_train) if 'df_train' in globals() else None,
+    "num_val_samples": len(df_val) if 'df_val' in globals() else None,
+    "batch_size": BATCH_SIZE,
+    "epochs": EPOCHS,
+    "use_lora": USE_LORA,
+    "use_qlora": USE_QLORA,
+}
+
+# --- Salvamento Final e Gráficos ---
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-final_output_dir = f"FT_text/SmolVLM_DIMEMEX_{timestamp}"
+final_output_dir = f"./SmolVLM_DIMEMEX_{timestamp}"
 os.makedirs(final_output_dir, exist_ok=True)
 
 print(f"💾 Salvando modelo final em {final_output_dir}...")
 trainer.save_model(final_output_dir)
 processor.save_pretrained(final_output_dir)
 
-# Extração e Salvamento de Métricas
 history = trainer.state.log_history
-
-# Separa dados de treino e validação para gráficos
 train_steps, train_losses = [], []
 eval_steps, eval_losses = [], []
 
@@ -243,7 +267,7 @@ for entry in history:
         eval_steps.append(entry['step'])
         eval_losses.append(entry['eval_loss'])
 
-# Plotagem Melhorada
+# Plotagem
 plt.figure(figsize=(12, 6))
 if train_steps:
     plt.plot(train_steps, train_losses, label='Training Loss', color='blue', alpha=0.6)
@@ -258,58 +282,34 @@ plt.grid(True, linestyle='--', alpha=0.5)
 plt.savefig(os.path.join(final_output_dir, "loss_curve.png"))
 print(f"📈 Gráfico de Loss salvo em {final_output_dir}/loss_curve.png")
 
-# Salvar JSON de resumo
-summary = {
-    "final_train_loss": train_losses[-1] if train_losses else None,
-    "best_eval_loss": min(eval_losses) if eval_losses else None,
-    "total_steps": trainer.state.global_step,
-    "epoch": trainer.state.epoch,
-    "training_runtime": train_result.metrics.get("train_runtime"),
-    "hyperparameters": {
-        "batch_size": BATCH_SIZE,
-        "epochs": EPOCHS,
-        "lr": LR,
-        "lora": USE_LORA or USE_QLORA
-    }
-}
-
-with open(os.path.join(final_output_dir, "training_summary.json"), "w") as f:
-    json.dump(summary, f, indent=4)
-
-with open(os.path.join(final_output_dir, "full_history.json"), "w") as f:
-    json.dump(history, f, indent=4)
-
-print(f"{'='*50}")
-print("📊 Gerando Classification Report no dataset de VALIDAÇÃO...")
-print(f"{'='*50}\n")
-
-# Função para fazer predições
-def predict_single_sample(text_content, label_text):
-    """Faz predição com texto"""
+# --- Função de Avaliação Final ---
+def predict_single_sample(row):
     try:
+        texto_visual = row["text"]
+        texto_contexto = row["description"]
         
+        # Prompt de raciocínio em espanhol para inferência
         prompt_espanhol = (
-            "Analice el TEXTO VISUAL. "
+            "Analice el TEXTO VISUAL y la DESCRIPCIÓN CONTEXTUAL separadamente. "
             "Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
         )
         prompt_completo = (
             f"{prompt_espanhol}\n"
-            f"TEXTO VISUAL: '{text_content}'"
+            f"TEXTO VISUAL: '{texto_visual}'\n"
+            f"DESCRIPCIÓN CONTEXTUAL: '{texto_contexto}'"
         )
+        
         messages = [
-                    {"role": "user", "content": [{"type": "text", "text": prompt_completo}]},
-                ]
-
+            {"role": "user", "content": [{"type": "text", "text": prompt_completo}]}
+        ]
+        
         text = processor.apply_chat_template(messages, add_generation_prompt=True)
         inputs = processor(text=text, images=None, return_tensors="pt")
         inputs = {k: v.to(model.device) for k, v in inputs.items()}
         
         with torch.no_grad():
             outputs = model.generate(
-                **inputs,
-                max_new_tokens=15,
-                do_sample=False,
-                num_beams=1,
+                **inputs, max_new_tokens=15, do_sample=False, num_beams=1,
                 pad_token_id=processor.tokenizer.pad_token_id
             )
         
@@ -317,101 +317,87 @@ def predict_single_sample(text_content, label_text):
         response = processor.decode(generated_ids, skip_special_tokens=True).strip().lower()
         
         # Mapear resposta
-        if "hate speech" in response or "hate" in response:
+        if "hate speech" in response or "hate" in response or "hate-speech" in response:
             return "hate speech"
-        elif "inappropriate" in response:
+        elif "inappropriate" in response or "inappropriate content" in response:
             return "inappropriate content"
         elif "neither" in response:
             return "neither"
         else:
-            return response  # Retorna resposta bruta se não mapear
+            return "error_unmapped"
             
     except Exception as e:
-        print(f"Erro ao processar texto: {e}")
         return "error"
 
-# Fazer predições no conjunto de validação
-print("🔮 Gerando predições no dataset de validação...")
+# --- Execução da Avaliação ---
+print(f"{'='*50}")
+print("📊 Gerando Classification Report no dataset de VALIDAÇÃO (Texto Separado)...")
+print(f"{'='*50}\n")
+
 predictions = []
 true_labels = []
 
-for idx in tqdm(range(len(ds_val)), desc="Validação"):
+for idx in tqdm(range(len(df_val)), desc="Validação"):
     row = df_val.iloc[idx]
-    pred = predict_single_sample(row['text'], row['label'])
+    pred = predict_single_sample(row)
     predictions.append(pred)
     true_labels.append(row['label'])
 
-# Filtrar predições válidas
+# Filtrar e Gerar Relatório
 valid_labels = ["hate speech", "inappropriate content", "neither"]
 valid_indices = [i for i, p in enumerate(predictions) if p in valid_labels]
 
 if len(valid_indices) < len(predictions):
-    print(f"\n⚠️  {len(predictions) - len(valid_indices)} predições inválidas removidas")
+    print(f"\n⚠️  {len(predictions) - len(valid_indices)} predições inválidas/erros removidos")
     predictions = [predictions[i] for i in valid_indices]
     true_labels = [true_labels[i] for i in valid_indices]
+    df_val_filtered = df_val.iloc[valid_indices].reset_index(drop=True)
+else:
+    df_val_filtered = df_val.reset_index(drop=True)
 
-# Gerar classification report
 print("\n" + "="*70)
-print("CLASSIFICATION REPORT - VALIDAÇÃO")
+print("CLASSIFICATION REPORT - VALIDAÇÃO (TEXTO SEPARADO)")
 print("="*70 + "\n")
 
-report_text = classification_report(
-    true_labels, 
-    predictions, 
-    labels=valid_labels,
-    target_names=valid_labels,
-    digits=4,
-    zero_division=0
-)
+if len(true_labels) > 0:
+    report_text = classification_report(
+        true_labels, predictions, labels=valid_labels, digits=4, zero_division=0
+    )
 
-print(report_text)
+    print(report_text)
 
-# Métricas resumidas
-metrics_summary = {
-    "accuracy": accuracy_score(true_labels, predictions),
-    "f1_weighted": f1_score(true_labels, predictions, labels=valid_labels, average='weighted', zero_division=0),
-    "f1_macro": f1_score(true_labels, predictions, labels=valid_labels, average='macro', zero_division=0),
-    "precision_weighted": precision_score(true_labels, predictions, labels=valid_labels, average='weighted', zero_division=0),
-    "recall_weighted": recall_score(true_labels, predictions, labels=valid_labels, average='weighted', zero_division=0),
-    "total_samples": len(true_labels),
-    "training_duration_seconds": training_duration,
-    "training_duration_minutes": training_duration / 60
-}
+    # Métricas resumidas
+    metrics_summary = {
+        "accuracy": accuracy_score(true_labels, predictions),
+        "f1_weighted": f1_score(true_labels, predictions, labels=valid_labels, average='weighted', zero_division=0),
+        "total_samples": len(true_labels),
+        "training_duration_minutes": training_duration / 60
+    }
 
-print("\nSummary Metrics:")
-print(json.dumps(metrics_summary, indent=4))
+    # Salvar Relatórios
+    report_file = os.path.join(final_output_dir, "classification_report_validation_separated_text.txt")
+    with open(report_file, 'w') as f:
+        f.write(report_text)
+        f.write("\n\nSummary Metrics:\n")
+        f.write(json.dumps(metrics_summary, indent=4))
 
-# Salvar classification report
-report_file = os.path.join(final_output_dir, "classification_report_validation.txt")
-with open(report_file, 'w') as f:
-    f.write("="*70 + "\n")
-    f.write("CLASSIFICATION REPORT - VALIDATION SET\n")
-    f.write("="*70 + "\n\n")
-    f.write(report_text)
-    f.write("\n\nSummary Metrics:\n")
-    f.write(json.dumps(metrics_summary, indent=4))
-    f.write(f"\n\nTraining Duration: {training_duration/60:.2f} minutes\n")
+    predictions_df = pd.DataFrame({
+        'image_path': df_val_filtered['image_path'],
+        'true_label': true_labels,
+        'predicted_label': predictions,
+        'correct': [t == p for t, p in zip(true_labels, predictions)]
+    })
+    predictions_file = os.path.join(final_output_dir, "validation_predictions_separated_text.csv")
+    predictions_df.to_csv(predictions_file, index=False)
 
-print(f"\n✅ Classification report salvo em: {report_file}")
-
-# Salvar predições detalhadas
-predictions_df = pd.DataFrame({
-    'text': [df_val.iloc[i]['text'] for i in valid_indices],
-    'true_label': true_labels,
-    'predicted_label': predictions,
-    'correct': [t == p for t, p in zip(true_labels, predictions)]
-})
-
-predictions_file = os.path.join(final_output_dir, "validation_predictions.csv")
-predictions_df.to_csv(predictions_file, index=False)
-print(f"✅ Predições detalhadas salvas em: {predictions_file}")
-
-# Atualizar summary com métricas de classificação
-summary["classification_metrics"] = metrics_summary
-with open(os.path.join(final_output_dir, "training_summary.json"), "w") as f:
-    json.dump(summary, f, indent=4)
+    # Atualiza summary final
+    summary["classification_metrics"] = metrics_summary
+    with open(os.path.join(final_output_dir, "training_summary.json"), "w") as f:
+        json.dump(summary, f, indent=4)
+else:
+    print("\n🛑 Não há predições válidas suficientes para gerar o relatório.")
 
 print(f"{'='*50}")
-print(f"✅ Treinamento finalizado com sucesso!")
-print(f"📁 Todos os arquivos salvos em: {final_output_dir}")
+print(f"✅ Processo concluído com sucesso!")
+print(f"📁 Arquivos finais em: {final_output_dir}")
 print(f"{'='*50}")

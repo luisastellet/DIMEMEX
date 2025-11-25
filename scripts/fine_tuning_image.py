@@ -2,7 +2,7 @@
 # !pip install flash-attn --no-build-isolation
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 import torch
 from peft import LoraConfig, prepare_model_for_kbit_training, get_peft_model
@@ -16,6 +16,7 @@ from transformers import (
     TrainerCallback
 )
 from datasets import Dataset
+from PIL import Image
 import pandas as pd
 import json
 import matplotlib.pyplot as plt
@@ -28,7 +29,7 @@ import time
 BATCH_SIZE = 8
 EPOCHS = 6
 LR = 2e-4
-EVAL_STEPS = 25
+EVAL_STEPS = 25  
 
 USE_LORA = False
 USE_QLORA = True
@@ -50,17 +51,34 @@ df_train = pd.read_csv(CSV_TRAIN)
 df_val   = pd.read_csv(CSV_VAL)
 df_test  = pd.read_csv(CSV_TEST)
 
-ds_train = Dataset.from_pandas(df_train[["text", "label"]].reset_index(drop=True))
-ds_val = Dataset.from_pandas(df_val[["text", "label"]].reset_index(drop=True))
-print("✅ Datasets prontos!")
+# Ajuste de caminhos
+df_train["image_path"] = df_train["image_path"].apply(lambda x: os.path.join(TRAIN_IMAGES_DIR, x))
+df_val["image_path"]   = df_val["image_path"].apply(lambda x: os.path.join(VAL_IMAGES_DIR, x))
+df_test["image_path"]  = df_test["image_path"].apply(lambda x: os.path.join(TEST_IMAGES_DIR, x))
+
+ds_train = Dataset.from_pandas(df_train.reset_index(drop=True))
+ds_val = Dataset.from_pandas(df_val.reset_index(drop=True))
+
+def load_image(example):
+    try:
+        example["image"] = Image.open(example["image_path"]).convert("RGB")
+    except Exception as e:
+        print(f"Erro imagem: {example['image_path']}")
+        example["image"] = Image.new('RGB', (224, 224), color='black')
+    return example
+
+print("🖼️  Processando imagens (map)...")
+ds_train = ds_train.map(load_image)
+ds_val = ds_val.map(load_image)
+print("✅ Imagens prontas!")
 
 processor = AutoProcessor.from_pretrained(model_id)
 
 # Configuração do Modelo
 if USE_QLORA or USE_LORA:
     lora_config = LoraConfig(
-        r=16, 
-        lora_alpha=32, 
+        r=16,
+        lora_alpha=32,
         lora_dropout=0.3,
         target_modules=['down_proj','o_proj','k_proj','q_proj','gate_proj','up_proj','v_proj'],
         init_lora_weights="gaussian",
@@ -103,33 +121,32 @@ else:
     )
 
 # Collate Function
+image_token_id = processor.tokenizer.additional_special_tokens_ids[
+            processor.tokenizer.additional_special_tokens.index("<image>")]
+
 def collate_fn(examples):
     texts = []
-
-    prompt_espanhol = (
-        "Analice el TEXTO VISUAL."
-        "Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
-    )
+    images = []
+    prompt = "Analice la IMAGEN. Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
 
     for example in examples:
-        text_content = example["text"]
+        image = example["image"]
+        if image.mode != 'RGB': image = image.convert('RGB')
         answer = str(example["label"]) 
 
-        prompt_completo = (
-            f"{prompt_espanhol}\n"
-            f"TEXTO VISUAL: '{text_content}'"
-        )
         messages = [
-            {"role": "user", "content": [{"type": "text", "text": prompt_completo}]},
+            {"role": "user", "content": [{"type": "image"}, {"type": "text", "text": prompt}]},
             {"role": "assistant", "content": [{"type": "text", "text": answer}]}
         ]
         
         text = processor.apply_chat_template(messages, add_generation_prompt=False)
         texts.append(text.strip())
+        images.append([image])
 
-    batch = processor(text=texts, images=None, return_tensors="pt", padding=True)
+    batch = processor(text=texts, images=images, return_tensors="pt", padding=True)
     labels = batch["input_ids"].clone()
     labels[labels == processor.tokenizer.pad_token_id] = -100
+    labels[labels == image_token_id] = -100
     batch["labels"] = labels
     return batch
 
@@ -180,7 +197,7 @@ training_args = TrainingArguments(
 
     # Early Stopping Config
     load_best_model_at_end=True, 
-    metric_for_best_model="eval_loss",
+    metric_for_best_model="eval_loss", 
     greater_is_better=False,
 
     warmup_steps=100,
@@ -194,7 +211,7 @@ training_args = TrainingArguments(
     output_dir=output_dir_checkpoints,
     report_to="tensorboard",
     remove_unused_columns=False,
-    gradient_checkpointing=True
+    gradient_checkpointing=True                                       
 )
 
 log_txt_path = os.path.join(output_dir_checkpoints, "training_progress_log.txt")
@@ -221,7 +238,7 @@ print(f"\n⏱️  Tempo total de treinamento: {training_duration/60:.2f} minutos
 
 # Salvamento Final e Gráficos Completos 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-final_output_dir = f"FT_text/SmolVLM_DIMEMEX_{timestamp}"
+final_output_dir = f"FT_image/SmolVLM_DIMEMEX_{timestamp}"
 os.makedirs(final_output_dir, exist_ok=True)
 
 print(f"💾 Salvando modelo final em {final_output_dir}...")
@@ -269,7 +286,7 @@ summary = {
         "batch_size": BATCH_SIZE,
         "epochs": EPOCHS,
         "lr": LR,
-        "lora": USE_LORA or USE_QLORA
+        "lora": USE_LORA or USE_QLORA,
     }
 }
 
@@ -284,24 +301,24 @@ print("📊 Gerando Classification Report no dataset de VALIDAÇÃO...")
 print(f"{'='*50}\n")
 
 # Função para fazer predições
-def predict_single_sample(text_content, label_text):
-    """Faz predição com texto"""
+def predict_single_sample(image_path, label_text):
+    """Faz predição em uma única imagem"""
     try:
+        image = Image.open(image_path).convert("RGB")
+        prompt = "Analice la IMAGEN. Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
         
-        prompt_espanhol = (
-            "Analice el TEXTO VISUAL. "
-            "Clasifique este meme em una de estas categorías: hate speech, inappropriate content, o neither."
-        )
-        prompt_completo = (
-            f"{prompt_espanhol}\n"
-            f"TEXTO VISUAL: '{text_content}'"
-        )
         messages = [
-                    {"role": "user", "content": [{"type": "text", "text": prompt_completo}]},
+            {
+                "role": "user",
+                "content": [
+                    {"type": "image"},
+                    {"type": "text", "text": prompt}
                 ]
-
+            }
+        ]
+        
         text = processor.apply_chat_template(messages, add_generation_prompt=True)
-        inputs = processor(text=text, images=None, return_tensors="pt")
+        inputs = processor(text=text, images=[image], return_tensors="pt")
         inputs = {k: v.to(model.device) for k, v in inputs.items()}
         
         with torch.no_grad():
@@ -327,7 +344,7 @@ def predict_single_sample(text_content, label_text):
             return response  # Retorna resposta bruta se não mapear
             
     except Exception as e:
-        print(f"Erro ao processar texto: {e}")
+        print(f"Erro ao processar {image_path}: {e}")
         return "error"
 
 # Fazer predições no conjunto de validação
@@ -337,7 +354,7 @@ true_labels = []
 
 for idx in tqdm(range(len(ds_val)), desc="Validação"):
     row = df_val.iloc[idx]
-    pred = predict_single_sample(row['text'], row['label'])
+    pred = predict_single_sample(row['image_path'], row['label'])
     predictions.append(pred)
     true_labels.append(row['label'])
 
@@ -396,7 +413,7 @@ print(f"\n✅ Classification report salvo em: {report_file}")
 
 # Salvar predições detalhadas
 predictions_df = pd.DataFrame({
-    'text': [df_val.iloc[i]['text'] for i in valid_indices],
+    'image_path': [df_val.iloc[i]['image_path'] for i in valid_indices],
     'true_label': true_labels,
     'predicted_label': predictions,
     'correct': [t == p for t, p in zip(true_labels, predictions)]
