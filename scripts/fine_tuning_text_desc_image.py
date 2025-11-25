@@ -166,7 +166,7 @@ def collate_fn(examples):
 
 # Callbacks e Configuração de Treino 
 model_name = model_id.split("/")[-1]
-output_dir_checkpoints = f"./{model_name}-checkpoints"
+output_dir_checkpoints = f"FT_image_text_description/{model_name}-checkpoints"
 os.makedirs(output_dir_checkpoints, exist_ok=True)
 
 # Callback para logar em arquivo txt

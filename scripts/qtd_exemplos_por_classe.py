@@ -37,7 +37,7 @@ def count_file(csv_path: Path, name: str):
 def main():
     ap = argparse.ArgumentParser(description="Verifica balanceamento das classes.")
     ap.add_argument("--train", default="train/dados_espanhol_balanceado.csv")
-    ap.add_argument("--val",   default="validation/dados_espanhol.csv")
+    ap.add_argument("--val",   default="train/dados_espanhol.csv")
     ap.add_argument("--test",  default="test/dados_espanhol.csv")
     args = ap.parse_args()
 
