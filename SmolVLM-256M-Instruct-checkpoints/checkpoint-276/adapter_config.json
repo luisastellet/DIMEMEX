@@ -20,8 +20,8 @@
   "revision": null,
   "target_modules": [
     "v_proj",
-    "up_proj",
     "down_proj",
+    "up_proj",
     "o_proj",
     "k_proj",
     "gate_proj",
