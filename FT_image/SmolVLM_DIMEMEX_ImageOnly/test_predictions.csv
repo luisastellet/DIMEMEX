@@ -1,0 +1,649 @@
+ground_truth,prediction,correct
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,inappropriate content,False
+neither,hate speech,False
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,neither,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+neither,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,neither,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,neither,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,neither,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+inappropriate content,hate speech,False
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+hate speech,hate speech,True
+neither,hate speech,False
+hate speech,hate speech,True
+inappropriate content,hate speech,False
+inappropriate content,hate speech,False
+hate speech,hate speech,True

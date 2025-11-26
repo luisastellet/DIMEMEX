@@ -1,0 +1,18 @@
+                       precision    recall  f1-score   support
+
+          hate speech     0.6149    0.4975    0.5500       199
+inappropriate content     0.2750    0.1618    0.2037        68
+              neither     0.1500    0.3333    0.2069        54
+
+             accuracy                         0.3988       321
+            macro avg     0.3466    0.3309    0.3202       321
+         weighted avg     0.4647    0.3988    0.4189       321
+
+
+Summary Metrics:
+{
+    "accuracy": 0.3987538940809969,
+    "f1_weighted": 0.4189229459344402,
+    "total_samples": 321,
+    "training_duration_minutes": 2.9329665184020994
+}

@@ -1,0 +1,13 @@
+{
+    "final_train_loss": 0.9145,
+    "best_eval_loss": 0.9414084553718567,
+    "total_steps": 276,
+    "epoch": 6.0,
+    "training_runtime": 4883.9338,
+    "hyperparameters": {
+        "batch_size": 8,
+        "epochs": 6,
+        "lr": 0.0002,
+        "lora": true
+    }
+}
