@@ -18,3 +18,8 @@ Iniciando treinamento em 2025-11-25 16:44:29.252186
 [Epoch: 4.35] [Step: 200] | Val Loss: 0.9627 
 [Epoch: 4.90] [Step: 225] Train Loss: 0.9297 | LR: 4.01e-05
 [Epoch: 4.90] [Step: 225] | Val Loss: 0.9437 
+[Epoch: 5.44] [Step: 250] Train Loss: 0.9176 | LR: 1.14e-05
+[Epoch: 5.44] [Step: 250] | Val Loss: 0.9412 
+[Epoch: 5.98] [Step: 275] Train Loss: 0.9134 | LR: 6.37e-08
+[Epoch: 5.98] [Step: 275] | Val Loss: 0.9411 
+[Epoch: 6.00] [Step: 276] 

@@ -252,7 +252,7 @@ print(f"\n⏱️  Tempo total de treinamento: {training_duration/60:.2f} minutos
 
 # Salvamento Final e Gráficos Completos 
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-final_output_dir = f"FT_image/SmolVLM_DIMEMEX_{timestamp}"
+final_output_dir = f"FT_image_text_description/SmolVLM_DIMEMEX_{timestamp}"
 os.makedirs(final_output_dir, exist_ok=True)
 
 print(f"💾 Salvando modelo final em {final_output_dir}...")

@@ -150,7 +150,7 @@ def collate_fn(examples):
 
 # --- Callbacks e Configuração de Treino ---
 model_name = model_id.split("/")[-1]
-output_dir_checkpoints = f"./{model_name}-checkpoints_separated_text"
+output_dir_checkpoints = f"./{model_name}-checkpoints"
 os.makedirs(output_dir_checkpoints, exist_ok=True)
 
 # Callback para logar em arquivo txt
@@ -248,7 +248,7 @@ summary = {
 
 # --- Salvamento Final e Gráficos ---
 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-final_output_dir = f"./SmolVLM_DIMEMEX_{timestamp}"
+final_output_dir = f"FT_text_description/SmolVLM_DIMEMEX_{timestamp}"
 os.makedirs(final_output_dir, exist_ok=True)
 
 print(f"💾 Salvando modelo final em {final_output_dir}...")
