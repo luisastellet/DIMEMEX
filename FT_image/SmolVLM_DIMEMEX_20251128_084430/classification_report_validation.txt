@@ -1,0 +1,28 @@
+======================================================================
+CLASSIFICATION REPORT - VALIDATION SET
+======================================================================
+
+                       precision    recall  f1-score   support
+
+          hate speech     0.6258    0.9450    0.7530       200
+inappropriate content     0.0000    0.0000    0.0000        68
+              neither     0.1500    0.0556    0.0811        54
+
+             accuracy                         0.5963       322
+            macro avg     0.2586    0.3335    0.2780       322
+         weighted avg     0.4139    0.5963    0.4813       322
+
+
+Summary Metrics:
+{
+    "accuracy": 0.5962732919254659,
+    "f1_weighted": 0.48129188801283035,
+    "f1_macro": 0.278023042963282,
+    "precision_weighted": 0.41386820780716543,
+    "recall_weighted": 0.5962732919254659,
+    "total_samples": 322,
+    "training_duration_seconds": 4469.6559455394745,
+    "training_duration_minutes": 74.49426575899125
+}
+
+Training Duration: 74.49 minutes

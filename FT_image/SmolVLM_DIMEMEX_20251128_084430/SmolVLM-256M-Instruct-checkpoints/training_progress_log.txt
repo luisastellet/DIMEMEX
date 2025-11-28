@@ -1,3 +1,20 @@
 Iniciando treinamento em 2025-11-28 08:44:30.141564
 ------------------------------------------------------------
 [Epoch: 0.55] [Step: 25] Train Loss: 4.2045 | LR: 4.80e-05
+[Epoch: 1.00] [Step: 46] | Val Loss: 1.1998 
+[Epoch: 1.09] [Step: 50] Train Loss: 2.0451 | LR: 9.80e-05
+[Epoch: 1.63] [Step: 75] Train Loss: 0.3529 | LR: 1.48e-04
+[Epoch: 2.00] [Step: 92] | Val Loss: 0.1628 
+[Epoch: 2.17] [Step: 100] Train Loss: 0.1737 | LR: 1.98e-04
+[Epoch: 2.72] [Step: 125] Train Loss: 0.0929 | LR: 1.99e-04
+[Epoch: 3.00] [Step: 138] | Val Loss: 0.0238 
+[Epoch: 3.26] [Step: 150] Train Loss: 0.0215 | LR: 1.97e-04
+[Epoch: 3.81] [Step: 175] Train Loss: 0.0188 | LR: 1.92e-04
+[Epoch: 4.00] [Step: 184] | Val Loss: 0.0196 
+[Epoch: 4.35] [Step: 200] Train Loss: 0.0192 | LR: 1.86e-04
+[Epoch: 4.90] [Step: 225] Train Loss: 0.0194 | LR: 1.79e-04
+[Epoch: 5.00] [Step: 230] | Val Loss: 0.0190 
+[Epoch: 5.44] [Step: 250] Train Loss: 0.0162 | LR: 1.70e-04
+[Epoch: 5.98] [Step: 275] Train Loss: 0.0152 | LR: 1.60e-04
+[Epoch: 6.00] [Step: 276] | Val Loss: 0.0190 
+[Epoch: 6.00] [Step: 276] 
