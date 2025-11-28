@@ -1,0 +1,23 @@
+{
+    "final_train_loss": 1.3379,
+    "best_eval_loss": 1.3949564695358276,
+    "total_steps": 276,
+    "epoch": 6.0,
+    "training_runtime": 278.1479,
+    "hyperparameters": {
+        "batch_size": 8,
+        "epochs": 6,
+        "lr": 0.0002,
+        "lora": true
+    },
+    "classification_metrics": {
+        "accuracy": 0.5186335403726708,
+        "f1_weighted": 0.4768986802852866,
+        "f1_macro": 0.3365723217231338,
+        "precision_weighted": 0.6387452080801233,
+        "recall_weighted": 0.5186335403726708,
+        "total_samples": 322,
+        "training_duration_seconds": 278.3314895629883,
+        "training_duration_minutes": 4.638858159383138
+    }
+}

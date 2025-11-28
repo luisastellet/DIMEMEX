@@ -1,0 +1,39 @@
+Iniciando treinamento em 2025-11-27 12:22:13.531991
+------------------------------------------------------------
+[Epoch: 0.55] [Step: 25] Train Loss: 5.1096 | LR: 2.40e-05
+[Epoch: 1.00] [Step: 46] | Val Loss: 3.9661 
+[Epoch: 1.09] [Step: 50] Train Loss: 4.3518 | LR: 4.90e-05
+[Epoch: 1.63] [Step: 75] Train Loss: 2.9458 | LR: 7.40e-05
+[Epoch: 2.00] [Step: 92] | Val Loss: 1.7460 
+[Epoch: 2.17] [Step: 100] Train Loss: 1.8085 | LR: 9.90e-05
+[Epoch: 2.72] [Step: 125] Train Loss: 1.6543 | LR: 9.96e-05
+[Epoch: 3.00] [Step: 138] | Val Loss: 1.6266 
+[Epoch: 3.26] [Step: 150] Train Loss: 1.5967 | LR: 9.83e-05
+[Epoch: 3.81] [Step: 175] Train Loss: 1.5389 | LR: 9.62e-05
+[Epoch: 4.00] [Step: 184] | Val Loss: 1.5361 
+[Epoch: 4.35] [Step: 200] Train Loss: 1.5145 | LR: 9.32e-05
+[Epoch: 4.90] [Step: 225] Train Loss: 1.4039 | LR: 8.95e-05
+[Epoch: 5.00] [Step: 230] | Val Loss: 1.4331 
+[Epoch: 5.44] [Step: 250] Train Loss: 1.3750 | LR: 8.51e-05
+[Epoch: 5.98] [Step: 275] Train Loss: 1.3836 | LR: 8.00e-05
+[Epoch: 6.00] [Step: 276] | Val Loss: 1.4118 
+[Epoch: 6.52] [Step: 300] Train Loss: 1.3595 | LR: 7.45e-05
+[Epoch: 7.00] [Step: 322] | Val Loss: 1.4010 
+[Epoch: 7.07] [Step: 325] Train Loss: 1.3358 | LR: 6.85e-05
+[Epoch: 7.61] [Step: 350] Train Loss: 1.3385 | LR: 6.21e-05
+[Epoch: 8.00] [Step: 368] | Val Loss: 1.3919 
+[Epoch: 8.15] [Step: 375] Train Loss: 1.3209 | LR: 5.56e-05
+[Epoch: 8.70] [Step: 400] Train Loss: 1.3199 | LR: 4.89e-05
+[Epoch: 9.00] [Step: 414] | Val Loss: 1.3884 
+[Epoch: 9.24] [Step: 425] Train Loss: 1.3226 | LR: 4.23e-05
+[Epoch: 9.79] [Step: 450] Train Loss: 1.3079 | LR: 3.58e-05
+[Epoch: 10.00] [Step: 460] | Val Loss: 1.3854 
+[Epoch: 10.33] [Step: 475] Train Loss: 1.3020 | LR: 2.96e-05
+[Epoch: 10.87] [Step: 500] Train Loss: 1.3007 | LR: 2.37e-05
+[Epoch: 11.00] [Step: 506] | Val Loss: 1.3830 
+[Epoch: 11.42] [Step: 525] Train Loss: 1.2984 | LR: 1.83e-05
+[Epoch: 11.96] [Step: 550] Train Loss: 1.2900 | LR: 1.34e-05
+[Epoch: 12.00] [Step: 552] | Val Loss: 1.3826 
+[Epoch: 12.50] [Step: 575] Train Loss: 1.2941 | LR: 9.24e-06
+[Epoch: 13.00] [Step: 598] | Val Loss: 1.3818 
+[Epoch: 13.00] [Step: 598] 
