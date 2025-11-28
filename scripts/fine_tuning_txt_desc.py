@@ -2,7 +2,7 @@
 # !pip install flash-attn --no-build-isolation
 
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 import torch
 from peft import LoraConfig, prepare_model_for_kbit_training, get_peft_model
@@ -149,8 +149,12 @@ def collate_fn(examples):
     return batch
 
 # --- Callbacks e Configuração de Treino ---
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+final_output_dir = f"FT_text_description/SmolVLM_DIMEMEX_{timestamp}"
+os.makedirs(final_output_dir, exist_ok=True)
+
 model_name = model_id.split("/")[-1]
-output_dir_checkpoints = f"./{model_name}-checkpoints"
+output_dir_checkpoints = f"{final_output_dir}/{model_name}-checkpoints"
 os.makedirs(output_dir_checkpoints, exist_ok=True)
 
 # Callback para logar em arquivo txt
@@ -187,9 +191,9 @@ training_args = TrainingArguments(
 
     # Estratégia Unificada: Loga, Salva e Avalia nos mesmos passos
     logging_steps=25,
-    eval_strategy="steps",      
+    eval_strategy="epoch",      
     eval_steps=EVAL_STEPS,      
-    save_strategy="steps",      
+    save_strategy="epoch",      
     save_steps=EVAL_STEPS,
 
     # Early Stopping Config
@@ -220,7 +224,7 @@ trainer = Trainer(
     train_dataset=ds_train,
     eval_dataset=ds_val, 
     callbacks=[
-        EarlyStoppingCallback(early_stopping_patience=2),
+        EarlyStoppingCallback(early_stopping_patience=2, early_stopping_threshold=0.001),
         FileLoggingCallback(log_txt_path)
     ]
 )
@@ -235,21 +239,18 @@ print(f"\n⏱️  Tempo total de treinamento: {training_duration/60:.2f} minutos
 
 # Inicializa o dicionário summary para coletar métricas/metadata do treinamento
 summary = {
-    "model_id": model_id,
-    "training_duration_seconds": training_duration,
-    "training_duration_minutes": training_duration / 60,
-    "num_train_samples": len(df_train) if 'df_train' in globals() else None,
-    "num_val_samples": len(df_val) if 'df_val' in globals() else None,
-    "batch_size": BATCH_SIZE,
-    "epochs": EPOCHS,
-    "use_lora": USE_LORA,
-    "use_qlora": USE_QLORA,
+    "total_steps": trainer.state.global_step,
+    "epoch": trainer.state.epoch,
+    "learning_rate": LR,
+    "training_runtime": train_result.metrics.get("train_runtime"),
+    "hyperparameters": {
+        "batch_size": BATCH_SIZE,
+        "epochs": EPOCHS,
+        "lora": USE_LORA or USE_QLORA,
+    }
 }
 
 # --- Salvamento Final e Gráficos ---
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-final_output_dir = f"FT_text_description/SmolVLM_DIMEMEX_{timestamp}"
-os.makedirs(final_output_dir, exist_ok=True)
 
 print(f"💾 Salvando modelo final em {final_output_dir}...")
 trainer.save_model(final_output_dir)

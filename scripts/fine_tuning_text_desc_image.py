@@ -165,8 +165,13 @@ def collate_fn(examples):
     return batch
 
 # Callbacks e Configuração de Treino 
+
+timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+final_output_dir = f"FT_image_text_description/SmolVLM_DIMEMEX_{timestamp}"
+os.makedirs(final_output_dir, exist_ok=True)
+
 model_name = model_id.split("/")[-1]
-output_dir_checkpoints = f"FT_image_text_description/{model_name}-checkpoints"
+output_dir_checkpoints = f"{final_output_dir}/{model_name}-checkpoints"
 os.makedirs(output_dir_checkpoints, exist_ok=True)
 
 # Callback para logar em arquivo txt
@@ -204,9 +209,9 @@ training_args = TrainingArguments(
 
     # Estratégia Unificada: Loga, Salva e Avalia nos mesmos passos
     logging_steps=25,
-    eval_strategy="steps",      
+    eval_strategy="epoch",      
     eval_steps=EVAL_STEPS,      
-    save_strategy="steps",      
+    save_strategy="epoch",      
     save_steps=EVAL_STEPS,
 
     # Early Stopping Config
@@ -237,7 +242,7 @@ trainer = Trainer(
     train_dataset=ds_train,
     eval_dataset=ds_val, 
     callbacks=[
-        EarlyStoppingCallback(early_stopping_patience=2),
+        EarlyStoppingCallback(early_stopping_patience=2, early_stopping_threshold=0.001),
         FileLoggingCallback(log_txt_path)
     ]
 )
@@ -251,9 +256,6 @@ training_duration = training_end_time - training_start_time
 print(f"\n⏱️  Tempo total de treinamento: {training_duration/60:.2f} minutos ({training_duration:.2f} segundos)")
 
 # Salvamento Final e Gráficos Completos 
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-final_output_dir = f"FT_image_text_description/SmolVLM_DIMEMEX_{timestamp}"
-os.makedirs(final_output_dir, exist_ok=True)
 
 print(f"💾 Salvando modelo final em {final_output_dir}...")
 trainer.save_model(final_output_dir)
@@ -295,11 +297,11 @@ summary = {
     "best_eval_loss": min(eval_losses) if eval_losses else None,
     "total_steps": trainer.state.global_step,
     "epoch": trainer.state.epoch,
+    "learning_rate": LR,
     "training_runtime": train_result.metrics.get("train_runtime"),
     "hyperparameters": {
         "batch_size": BATCH_SIZE,
         "epochs": EPOCHS,
-        "lr": LR,
         "lora": USE_LORA or USE_QLORA,
     }
 }
