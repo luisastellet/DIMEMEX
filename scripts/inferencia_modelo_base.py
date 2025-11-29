@@ -2,8 +2,9 @@
 """
 Script de inferência comparativa para múltiplos fine-tunings SmolVLM.
 
-Executa apenas 4 inferências, rodando o modo de inferência (modalidade)
-que corresponde ao tipo de fine-tuning realizado (inferência 'in-domain').
+Executa:
+1. Inferência IN-DOMAIN nos 4 modelos Fine-Tuned (FT).
+2. Inferência dos 4 MODOS no Modelo Base (Zero-Shot).
 
 Gera e salva:
 1. Métricas agregadas (CSV e JSON)
@@ -40,7 +41,7 @@ except ImportError:
 # ===================== CONFIGURAÇÃO =====================
 BASE_MODEL_ID = "HuggingFaceTB/SmolVLM-256M-Instruct"
 
-# Mapeamento de diretórios de modelo para o modo de inferência IN-DOMAIN
+# --- Configuração FT ---
 MODEL_DIRS = {
     "text": "/home/amandazirpolo/DIMEMEX/FT_text/SmolVLM_DIMEMEX_20251124_212719 ***",
     "image": "/home/amandazirpolo/DIMEMEX/FT_image/SmolVLM_DIMEMEX_20251125_133530 ***",
@@ -48,10 +49,18 @@ MODEL_DIRS = {
     "text_description_image": "/home/amandazirpolo/DIMEMEX/FT_image_text_description/SmolVLM_DIMEMEX_20251127_191312 ***",
 }
 
+# --- Configuração BASE ---
+BASE_MODEL_MODES = [
+    "text",
+    "image",
+    "text_description",
+    "text_description_image",
+]
+BASE_MODEL_NAME = "BASE_MODEL" # Nome que aparecerá nos arquivos de saída
+
 TEST_CSV = "/home/amandazirpolo/DIMEMEX/test/dados_espanhol_teste.csv"
 TEST_IMAGES_DIR = "/home/amandazirpolo/DIMEMEX/test_images"  
 
-# DIRETÓRIO DE SAÍDA
 OUTPUT_DIR = "resultados_inferencia_smolvlm" 
 
 LABELS = ["hate speech", "inappropriate content", "neither"]
@@ -63,7 +72,7 @@ BATCH_SIZE = 8
 TEMPERATURE = 0.0 
 
 
-# ===================== FUNÇÃO DE PLOTAGEM (NOVA) =====================
+# ===================== FUNÇÃO DE PLOTAGEM =====================
 
 def plot_confusion_matrix_to_png(cm: np.ndarray, labels: List[str], path: str, title: str):
     if not PLOTTING_AVAILABLE:
@@ -87,7 +96,7 @@ def plot_confusion_matrix_to_png(cm: np.ndarray, labels: List[str], path: str, t
     plt.close()
 
 
-# ===================== UTILIDADES (sem alteração significativa) =====================
+# ===================== UTILIDADES =====================
 def safe_image_open(path: str) -> Image.Image:
     try:
         return Image.open(path).convert("RGB")
@@ -109,8 +118,7 @@ def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
                 raise ValueError("CSV sem coluna 'label'.")
     return df
 
-# As funções load_model, build_messages, parse_prediction, e generate_batch permanecem iguais.
-
+# Função para carregar modelos FINE-TUNED (original)
 def load_model(model_dir: str, processor: AutoProcessor) -> Optional[Idefics3ForConditionalGeneration]:
     if not os.path.isdir(model_dir):
         print(f"[WARN] Diretório de modelo não encontrado: {model_dir}. Pulando.")
@@ -164,6 +172,33 @@ def load_model(model_dir: str, processor: AutoProcessor) -> Optional[Idefics3For
     except Exception as e:
         print(f"[ERRO] Falha ao carregar modelo/adapter de {model_dir}: {e}")
         return None
+
+# Função para carregar o MODELO BASE (NOVA)
+def load_base_model(processor: AutoProcessor) -> Idefics3ForConditionalGeneration:
+    try:
+        has_flash = False
+        try:
+            import flash_attn  
+            has_flash = True
+        except Exception:
+            has_flash = False
+
+        kwargs = {"torch_dtype": DTYPE, "device_map": "auto"}
+        if torch.cuda.is_available() and has_flash:
+            kwargs["_attn_implementation"] = "flash_attention_2"
+        else:
+            if torch.cuda.is_available():
+                print("[INFO] flash_attn não encontrado — usando implementação padrão de atenção.")
+
+        model = Idefics3ForConditionalGeneration.from_pretrained(
+            BASE_MODEL_ID,
+            **kwargs
+        )
+        print(f"[OK] Carregado modelo base: {BASE_MODEL_ID}")
+        return model
+    except Exception as e:
+        raise SystemExit(f"[ERRO FATAL] Falha ao carregar o modelo base {BASE_MODEL_ID}: {e}")
+
 
 def build_messages(row: Dict, mode: str) -> Dict:
     if mode == "text":
@@ -220,10 +255,12 @@ def generate_batch(model, processor, batch_rows: List[Dict], mode: str) -> List[
 
         if any(c.get("type") == "image" for c in messages[0]["content"]):
             img_path = row.get("image_path", "")
-            if img_path and not os.path.isfile(img_path):
-                candidate = os.path.join(TEST_IMAGES_DIR, img_path)
-                img_path = candidate
-            images.append([safe_image_open(img_path)])
+            # Assume que TEST_IMAGES_DIR é um caminho absoluto aqui, conforme a configuração
+            if img_path and not os.path.isabs(img_path):
+                 img_path = os.path.join(TEST_IMAGES_DIR, img_path)
+            
+            # Garante que o caminho exista (ou usa a imagem preta de fallback)
+            images.append([safe_image_open(img_path) if os.path.exists(img_path) else safe_image_open("")])
             has_images_in_batch = True
         else:
             images.append([]) 
@@ -250,7 +287,8 @@ def generate_batch(model, processor, batch_rows: List[Dict], mode: str) -> List[
         preds.append(parse_prediction(text_out))
     return preds
 
-def evaluate(model_name: str, model_dir: str, df: pd.DataFrame, processor: AutoProcessor) -> List[Dict]:
+# Função de avaliação para modelos FINE-TUNED (IN-DOMAIN)
+def evaluate_ft(model_name: str, model_dir: str, df: pd.DataFrame, processor: AutoProcessor) -> List[Dict]:
     mode = model_name 
     
     model = load_model(model_dir, processor)
@@ -264,7 +302,7 @@ def evaluate(model_name: str, model_dir: str, df: pd.DataFrame, processor: AutoP
     gts = []
     prediction_data = [] 
 
-    for i in tqdm(range(0, len(rows), BATCH_SIZE), desc=f"Inferência {model_name}/{mode}"):
+    for i in tqdm(range(0, len(rows), BATCH_SIZE), desc=f"Inferência FT {model_name}/{mode}"):
         batch = rows[i:i+BATCH_SIZE]
         batch_preds = generate_batch(model, processor, batch, mode)
         
@@ -295,19 +333,17 @@ def evaluate(model_name: str, model_dir: str, df: pd.DataFrame, processor: AutoP
     # --- 2. Calcular e Salvar Matriz de Confusão (CSV e PNG) ---
     cm = confusion_matrix(gts, preds, labels=LABELS)
 
-    # 2a. Salvar Matriz de Confusão em CSV
     cm_df = pd.DataFrame(cm, index=LABELS, columns=LABELS)
     cm_csv_path = os.path.join(OUTPUT_DIR, f"matrix_confusion_{model_name}_{mode}.csv")
     cm_df.to_csv(cm_csv_path, index=True)
     
-    # 2b. Salvar Matriz de Confusão em PNG
     cm_png_path = os.path.join(OUTPUT_DIR, f"matrix_confusion_{model_name}_{mode}.png")
     if PLOTTING_AVAILABLE:
         plot_confusion_matrix_to_png(
             cm, 
             LABELS, 
             cm_png_path, 
-            title=f"Matriz de Confusão - {model_name} ({mode})"
+            title=f"Matriz de Confusão - {model_name.upper()} ({mode})"
         )
         print(f"[OK] Matriz de confusão em PNG salva em {cm_png_path}")
     else:
@@ -330,14 +366,103 @@ def evaluate(model_name: str, model_dir: str, df: pd.DataFrame, processor: AutoP
         "time_avg_sec": avg_time,
         "per_class": {lbl: report.get(lbl, {}) for lbl in LABELS},
         "support": {lbl: report.get(lbl, {}).get("support", 0) for lbl in LABELS},
-        "confusion_matrix_path_csv": cm_csv_path, # Guarda o caminho do CSV
-        "confusion_matrix_path_png": cm_png_path, # Guarda o caminho do PNG
+        "confusion_matrix_path_csv": cm_csv_path, 
+        "confusion_matrix_path_png": cm_png_path, 
         "predictions_path": pred_path,
     }
     
     print(f"[OK] {model_name} | {mode} -> F1 macro {res['f1_macro']:.4f} | tempo médio {avg_time:.4f}s")
     
     return [res] 
+
+# Função de avaliação para o MODELO BASE (NOVA)
+def evaluate_base(df: pd.DataFrame, processor: AutoProcessor, model_instance: Idefics3ForConditionalGeneration) -> List[Dict]:
+    all_base_results = []
+    
+    rows = df.to_dict(orient="records")
+    
+    for mode in BASE_MODEL_MODES:
+        model_name = BASE_MODEL_NAME
+        start = time.time()
+        preds = []
+        gts = []
+        prediction_data = [] 
+
+        for i in tqdm(range(0, len(rows), BATCH_SIZE), desc=f"Inferência BASE {model_name}/{mode}"):
+            batch = rows[i:i+BATCH_SIZE]
+            batch_preds = generate_batch(model_instance, processor, batch, mode)
+            
+            for j, row in enumerate(batch):
+                gt_label = row["label"]
+                pred_label = batch_preds[j]
+                
+                preds.append(pred_label)
+                gts.append(gt_label)
+                
+                prediction_data.append({
+                    "text": row["text"],
+                    "description": row["description"],
+                    "image_path": row["image_path"],
+                    "ground_truth": gt_label,
+                    "prediction": pred_label,
+                })
+
+        elapsed = time.time() - start
+        avg_time = elapsed / max(1, len(rows))
+        
+        # --- 1. Salvar Predições Detalhadas ---
+        df_predictions = pd.DataFrame(prediction_data)
+        # Caminho com o prefixo BASE_MODEL
+        pred_path = os.path.join(OUTPUT_DIR, f"predicoes_{model_name}_{mode}.csv")
+        df_predictions.to_csv(pred_path, index=False)
+        print(f"\n[OK] Predições detalhadas (BASE) salvas em {pred_path}")
+
+        # --- 2. Calcular e Salvar Matriz de Confusão (CSV e PNG) ---
+        cm = confusion_matrix(gts, preds, labels=LABELS)
+
+        cm_df = pd.DataFrame(cm, index=LABELS, columns=LABELS)
+        cm_csv_path = os.path.join(OUTPUT_DIR, f"matrix_confusion_{model_name}_{mode}.csv")
+        cm_df.to_csv(cm_csv_path, index=True)
+        
+        cm_png_path = os.path.join(OUTPUT_DIR, f"matrix_confusion_{model_name}_{mode}.png")
+        if PLOTTING_AVAILABLE:
+            plot_confusion_matrix_to_png(
+                cm, 
+                LABELS, 
+                cm_png_path, 
+                title=f"Matriz de Confusão - BASE ({mode})"
+            )
+            print(f"[OK] Matriz de confusão (BASE) em PNG salva em {cm_png_path}")
+        else:
+            cm_png_path = "N/A (Plotagem não disponível)"
+
+
+        # --- 3. Calcular Métricas Agregadas ---
+        report = classification_report(gts, preds, labels=LABELS, output_dict=True, zero_division=0)
+
+        res = {
+            "model": model_name,
+            "model_dir": BASE_MODEL_ID, # O dir do modelo base é o ID
+            "mode": mode,
+            "samples": len(rows),
+            "accuracy": accuracy_score(gts, preds),
+            "f1_macro": f1_score(gts, preds, labels=LABELS, average="macro", zero_division=0),
+            "precision_macro": precision_score(gts, preds, labels=LABELS, average="macro", zero_division=0),
+            "recall_macro": recall_score(gts, preds, labels=LABELS, average="macro", zero_division=0),
+            "time_total_sec": elapsed,
+            "time_avg_sec": avg_time,
+            "per_class": {lbl: report.get(lbl, {}) for lbl in LABELS},
+            "support": {lbl: report.get(lbl, {}).get("support", 0) for lbl in LABELS},
+            "confusion_matrix_path_csv": cm_csv_path, 
+            "confusion_matrix_path_png": cm_png_path, 
+            "predictions_path": pred_path,
+        }
+        
+        print(f"[OK] {model_name} | {mode} -> F1 macro {res['f1_macro']:.4f} | tempo médio {avg_time:.4f}s")
+        all_base_results.append(res)
+        
+    return all_base_results 
+
 
 def main():
     # Cria o diretório de saída, se não existir
@@ -351,21 +476,39 @@ def main():
     df = normalize_columns(df)
 
     processor = AutoProcessor.from_pretrained(BASE_MODEL_ID)
-
     all_results = []
+
+    # --- 1. Avaliação dos Modelos FINE-TUNED (FT) - 4 inferências IN-DOMAIN ---
+    print("\n\n##############################################")
+    print("## INÍCIO DA AVALIAÇÃO: MODELOS FINE-TUNED ##")
+    print("##############################################")
     for key, mdir in MODEL_DIRS.items():
         print(f"\n=== Avaliando modelo IN-DOMAIN: '{key}' ({mdir}) ===")
-        results = evaluate(key, mdir, df, processor)
+        results = evaluate_ft(key, mdir, df, processor)
         all_results.extend(results)
 
+    # --- 2. Avaliação do Modelo BASE - 4 inferências para cada modo ---
+    print("\n\n################################################")
+    print("## INÍCIO DA AVALIAÇÃO: MODELO BASE (4 MODOS) ##")
+    print("################################################")
+    
+    # Carrega o modelo base uma única vez
+    base_model = load_base_model(processor)
+    
+    # Executa a avaliação do modelo base nos 4 modos
+    base_results = evaluate_base(df, processor, base_model)
+    all_results.extend(base_results)
+
+
     if not all_results:
-        print("Nenhum resultado gerado (model dirs ausentes?).")
+        print("\nNenhum resultado gerado (model dirs ausentes?).")
         return
+
+    # --- 3. Salvamento dos Resultados Finais Agregados (FT + BASE) ---
 
     # Flatten para CSV (métricas agregadas)
     flat_rows = []
     for r in all_results:
-        # NOTE: Atualiza a remoção de chaves para incluir o novo caminho do PNG
         base = {k: v for k, v in r.items() if k not in ("per_class", "support")}
         for lbl in LABELS:
             pc = r["per_class"].get(lbl, {})
@@ -380,14 +523,14 @@ def main():
     df_out = pd.DataFrame(flat_rows)
     
     # Salva os arquivos finais dentro do diretório de saída
-    final_csv_path = os.path.join(OUTPUT_DIR, "resultados_inferencia_in_domain.csv")
-    final_json_path = os.path.join(OUTPUT_DIR, "resultados_inferencia_in_domain.json")
+    final_csv_path = os.path.join(OUTPUT_DIR, "resultados_inferencia_FT_e_BASE.csv")
+    final_json_path = os.path.join(OUTPUT_DIR, "resultados_inferencia_FT_e_BASE.json")
     
     df_out.to_csv(final_csv_path, index=False)
     with open(final_json_path, "w", encoding="utf-8") as f:
         json.dump(all_results, f, ensure_ascii=False, indent=2)
         
-    print(f"\n[FINAL] Métricas agregadas salvas em {final_csv_path} e {final_json_path}")
+    print(f"\n[FINAL] Métricas agregadas (FT + BASE) salvas em {final_csv_path} e {final_json_path}")
 
 if __name__ == "__main__":
     main()

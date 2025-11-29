@@ -1,0 +1,162 @@
+[
+  {
+    "model": "text",
+    "model_dir": "/home/amandazirpolo/DIMEMEX/FT_text/SmolVLM_DIMEMEX_20251124_212719 ***",
+    "mode": "text",
+    "samples": 648,
+    "accuracy": 0.24382716049382716,
+    "f1_macro": 0.17929046861974338,
+    "precision_macro": 0.2631213761229871,
+    "recall_macro": 0.33712390428808336,
+    "time_total_sec": 41.315693616867065,
+    "time_avg_sec": 0.0637587864457825,
+    "per_class": {
+      "hate speech": {
+        "precision": 0.6138613861386139,
+        "recall": 0.15422885572139303,
+        "f1-score": 0.24652087475149106,
+        "support": 402.0
+      },
+      "inappropriate content": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 134.0
+      },
+      "neither": {
+        "precision": 0.17550274223034734,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.291350531107739,
+        "support": 112.0
+      }
+    },
+    "support": {
+      "hate speech": 402.0,
+      "inappropriate content": 134.0,
+      "neither": 112.0
+    },
+    "confusion_matrix_path_csv": "resultados_inferencia_smolvlm/matrix_confusion_text_text.csv",
+    "confusion_matrix_path_png": "resultados_inferencia_smolvlm/matrix_confusion_text_text.png",
+    "predictions_path": "resultados_inferencia_smolvlm/predicoes_text_text.csv"
+  },
+  {
+    "model": "image",
+    "model_dir": "/home/amandazirpolo/DIMEMEX/FT_image/SmolVLM_DIMEMEX_20251125_133530 ***",
+    "mode": "image",
+    "samples": 648,
+    "accuracy": 0.23765432098765432,
+    "f1_macro": 0.2401370745334893,
+    "precision_macro": 0.32959496442255065,
+    "recall_macro": 0.3189410092395167,
+    "time_total_sec": 168.4487442970276,
+    "time_avg_sec": 0.2599517658904747,
+    "per_class": {
+      "hate speech": {
+        "precision": 0.6206896551724138,
+        "recall": 0.13432835820895522,
+        "f1-score": 0.22085889570552147,
+        "support": 402.0
+      },
+      "inappropriate content": {
+        "precision": 0.21333333333333335,
+        "recall": 0.3582089552238806,
+        "f1-score": 0.26740947075208915,
+        "support": 134.0
+      },
+      "neither": {
+        "precision": 0.15476190476190477,
+        "recall": 0.4642857142857143,
+        "f1-score": 0.23214285714285715,
+        "support": 112.0
+      }
+    },
+    "support": {
+      "hate speech": 402.0,
+      "inappropriate content": 134.0,
+      "neither": 112.0
+    },
+    "confusion_matrix_path_csv": "resultados_inferencia_smolvlm/matrix_confusion_image_image.csv",
+    "confusion_matrix_path_png": "resultados_inferencia_smolvlm/matrix_confusion_image_image.png",
+    "predictions_path": "resultados_inferencia_smolvlm/predicoes_image_image.csv"
+  },
+  {
+    "model": "text_description",
+    "model_dir": "/home/amandazirpolo/DIMEMEX/FT_text_description/SmolVLM_DIMEMEX_20251124_183536 ***",
+    "mode": "text_description",
+    "samples": 648,
+    "accuracy": 0.18209876543209877,
+    "f1_macro": 0.11575333901676614,
+    "precision_macro": 0.4474050853361198,
+    "recall_macro": 0.3416252072968491,
+    "time_total_sec": 42.076495885849,
+    "time_avg_sec": 0.06493286402137191,
+    "per_class": {
+      "hate speech": {
+        "precision": 0.6666666666666666,
+        "recall": 0.009950248756218905,
+        "f1-score": 0.0196078431372549,
+        "support": 402.0
+      },
+      "inappropriate content": {
+        "precision": 0.5,
+        "recall": 0.014925373134328358,
+        "f1-score": 0.028985507246376812,
+        "support": 134.0
+      },
+      "neither": {
+        "precision": 0.1755485893416928,
+        "recall": 1.0,
+        "f1-score": 0.2986666666666667,
+        "support": 112.0
+      }
+    },
+    "support": {
+      "hate speech": 402.0,
+      "inappropriate content": 134.0,
+      "neither": 112.0
+    },
+    "confusion_matrix_path_csv": "resultados_inferencia_smolvlm/matrix_confusion_text_description_text_description.csv",
+    "confusion_matrix_path_png": "resultados_inferencia_smolvlm/matrix_confusion_text_description_text_description.png",
+    "predictions_path": "resultados_inferencia_smolvlm/predicoes_text_description_text_description.csv"
+  },
+  {
+    "model": "text_description_image",
+    "model_dir": "/home/amandazirpolo/DIMEMEX/FT_image_text_description/SmolVLM_DIMEMEX_20251127_191312 ***",
+    "mode": "text_description_image",
+    "samples": 648,
+    "accuracy": 0.1882716049382716,
+    "f1_macro": 0.1811508147344226,
+    "precision_macro": 0.3401757006686584,
+    "recall_macro": 0.31476545842217485,
+    "time_total_sec": 162.58505249023438,
+    "time_avg_sec": 0.25090285878122587,
+    "per_class": {
+      "hate speech": {
+        "precision": 0.6818181818181818,
+        "recall": 0.03731343283582089,
+        "f1-score": 0.07075471698113207,
+        "support": 402.0
+      },
+      "inappropriate content": {
+        "precision": 0.165,
+        "recall": 0.2462686567164179,
+        "f1-score": 0.19760479041916168,
+        "support": 134.0
+      },
+      "neither": {
+        "precision": 0.17370892018779344,
+        "recall": 0.6607142857142857,
+        "f1-score": 0.275092936802974,
+        "support": 112.0
+      }
+    },
+    "support": {
+      "hate speech": 402.0,
+      "inappropriate content": 134.0,
+      "neither": 112.0
+    },
+    "confusion_matrix_path_csv": "resultados_inferencia_smolvlm/matrix_confusion_text_description_image_text_description_image.csv",
+    "confusion_matrix_path_png": "resultados_inferencia_smolvlm/matrix_confusion_text_description_image_text_description_image.png",
+    "predictions_path": "resultados_inferencia_smolvlm/predicoes_text_description_image_text_description_image.csv"
+  }
+]
