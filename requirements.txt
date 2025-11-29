@@ -1,0 +1,30 @@
+# Dependências principais para o projeto DIMEMEX
+# OBS: instale o PyTorch (torch + torchvision) separadamente com a roda correta para sua CUDA.
+# Exemplo (CUDA 11.8):
+# pip install --index-url https://download.pytorch.org/whl/cu118 "torch>=2.0.0" "torchvision>=0.15.0"
+# Se for CPU-only, use a roda CPU do PyTorch conforme instruções do site oficial.
+
+accelerate>=0.20.0
+datasets>=2.12.0
+peft>=0.5.0
+bitsandbytes>=0.39.0
+tensorboard>=2.12.0
+# torch and torchvision: prefer instalar a partir das rodas do PyTorch compatíveis com CUDA
+# torch>=2.0.0
+# torchvision>=0.15.0
+transformers>=4.30.0
+pandas>=1.5.0
+Pillow>=9.0.0
+tqdm>=4.64.0
+scikit-learn>=1.1.0
+matplotlib>=3.5.0
+evaluate>=0.4.0
+bert-score>=0.3.11
+trl>=0.6.0
+unbabel-comet
+
+# Pacotes opcionais / que podem precisar de build específico
+# flash-attn frequentemente requer uma wheel compatível e compilação; instale separadamente se for usar:
+# pip install flash-attn --no-build-isolation
+
+# Observação: bitsandbytes e flash-attn exigem compatibilidade entre CUDA / PyTorch; instale/ajuste conforme seu ambiente.
