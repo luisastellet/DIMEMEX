@@ -23,7 +23,7 @@ MODEL_DIRS = {
     "full": "FT_image_text_description/SmolVLM_DIMEMEX_20251127_191312 ***",
 }
 
-TEST_CSV = "test/dados_espanhol_teste.csv"
+TEST_CSV = "test/dados_espanhol.csv"
 TEST_IMAGES_DIR = "test_images"  
 
 LABELS = ["hate speech", "inappropriate content", "neither"]

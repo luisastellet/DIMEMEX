@@ -9,3 +9,5 @@ gerar_csvs_idiomas.py
 venv/
 __pycache__/
 SmolVLM-256M-Instruct-checkpoints/training_progress_log.txt
+matriz_confusao/.DS_Store
+.DS_Store
