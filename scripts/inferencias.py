@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-"""
-Script de inferência comparativa para múltiplos fine-tunings SmolVLM.
-# ... (descrição e dependências omitidas para brevidade) ...
-"""
 
 import os
 import time
@@ -18,29 +14,29 @@ from transformers import AutoProcessor, Idefics3ForConditionalGeneration
 try:
     from peft import PeftModel
 except ImportError:
-    PeftModel = None  # Se não estiver instalado
+    PeftModel = None  
 
 # ===================== CONFIGURAÇÃO =====================
 BASE_MODEL_ID = "HuggingFaceTB/SmolVLM-256M-Instruct"
 
 # Diretórios genéricos (substitua pelos reais)
 MODEL_DIRS = {
-    "text": "/home/amandazirpolo/DIMEMEX/FT_text/SmolVLM_DIMEMEX_20251124_212719 ***",
-    "image": "/home/amandazirpolo/DIMEMEX/FT_image/SmolVLM_DIMEMEX_20251125_133530 ***",
-    "text_desc": "/home/amandazirpolo/DIMEMEX/FT_text_description/SmolVLM_DIMEMEX_20251124_183536 ***",
-    "full": "/home/amandazirpolo/DIMEMEX/FT_image_text_description/SmolVLM_DIMEMEX_20251127_191312 ***",
+    "text": "FT_text/SmolVLM_DIMEMEX_20251124_212719 ***",
+    "image": "FT_image/SmolVLM_DIMEMEX_20251125_133530 ***",
+    "text_desc": "FT_text_description/SmolVLM_DIMEMEX_20251124_183536 ***",
+    "full": "FT_image_text_description/SmolVLM_DIMEMEX_20251127_191312 ***",
 }
 
-TEST_CSV = "/home/amandazirpolo/DIMEMEX/test/dados_espanhol_teste.csv"
-TEST_IMAGES_DIR = "test_images"  # prefixo para image_path se necessário
+TEST_CSV = "test/dados_espanhol_teste.csv"
+TEST_IMAGES_DIR = "test_images"  
 
 LABELS = ["hate speech", "inappropriate content", "neither"]
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 DTYPE = torch.bfloat16 if torch.cuda.is_available() and torch.cuda.is_bf16_supported() else torch.float16
 GEN_MAX_NEW_TOKENS = 32
-BATCH_SIZE = 8  # aumentar conforme VRAM
-TEMPERATURE = 0.0  # geração determinística
+BATCH_SIZE = 8  
+TEMPERATURE = 0.0 
 
 MODES = [
     "text",
@@ -57,10 +53,8 @@ def safe_image_open(path: str) -> Image.Image:
         return Image.new("RGB", (224, 224), color="black")
 
 def normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
-    # Corrigir typo mage_path -> image_path
     if "image_path" not in df.columns and "mage_path" in df.columns:
         df = df.rename(columns={"mage_path": "image_path"})
-    # Garantir colunas relevantes
     for col in ["text", "description", "image_path", "label"]:
         if col not in df.columns:
             if col == "text":
@@ -77,12 +71,10 @@ def load_model(model_dir: str, processor: AutoProcessor) -> Optional[Idefics3For
     if not os.path.isdir(model_dir):
         print(f"[WARN] Diretório de modelo não encontrado: {model_dir}. Pulando.")
         return None
-    # Tenta carregar como modelo já full fine-tuned primeiro
     try:
-        # Ativa FlashAttention2 somente se o pacote estiver instalado e houver GPU
         has_flash = False
         try:
-            import flash_attn  # type: ignore
+            import flash_attn  
             has_flash = True
         except Exception:
             has_flash = False
@@ -103,12 +95,10 @@ def load_model(model_dir: str, processor: AutoProcessor) -> Optional[Idefics3For
     except Exception:
         pass
 
-    # Caso LoRA: carregar base e depois aplicar adapter
     try:
-        # Mesma lógica para base (LoRA): só ativa FlashAttention2 se disponível
         has_flash = False
         try:
-            import flash_attn  # type: ignore
+            import flash_attn 
             has_flash = True
         except Exception:
             has_flash = False
@@ -132,7 +122,6 @@ def load_model(model_dir: str, processor: AutoProcessor) -> Optional[Idefics3For
         return None
 
 def build_messages(row: Dict, mode: str) -> Dict:
-    # Monta mensagens estilo chat conforme modalidade.
     if mode == "text":
         prompt = (
             "Analice el TEXTO VISUAL. Clasifique este meme en: hate speech, inappropriate content, o neither.\n"
@@ -169,7 +158,6 @@ def parse_prediction(output_text: str) -> str:
     for lbl in LABELS:
         if lbl in text_low:
             return lbl
-    # fallback heurística simples
     if "hate" in text_low:
         return "hate speech"
     if "inappropriate" in text_low or "inaprop" in text_low:
@@ -188,18 +176,15 @@ def generate_batch(model, processor, batch_rows: List[Dict], mode: str) -> List[
 
         if any(c.get("type") == "image" for c in messages[0]["content"]):
             img_path = row.get("image_path", "")
-            # concatenar diretório se não incluir separador
             if img_path and not os.path.isfile(img_path):
                 candidate = os.path.join(TEST_IMAGES_DIR, img_path)
                 img_path = candidate
             images.append([safe_image_open(img_path)])
             has_images_in_batch = True
         else:
-            # Correção anterior: usar lista vazia [] em vez de None
             images.append([]) 
 
-    # CORREÇÃO: Passar o argumento 'images' para o processador SOMENTE se
-    # pelo menos uma amostra no batch atual realmente tiver imagens.
+    # CORREÇÃO: Passar o argumento 'images' para o processador SOMENTE se pelo menos uma amostra no batch atual realmente tiver imagens.
     kwargs = {"text": texts, "return_tensors": "pt", "padding": True}
     
     if has_images_in_batch:
@@ -214,7 +199,6 @@ def generate_batch(model, processor, batch_rows: List[Dict], mode: str) -> List[
             do_sample=bool(TEMPERATURE > 0),
             temperature=TEMPERATURE if TEMPERATURE > 0 else None
         )
-    # Decodificar somente novos tokens após input_ids
     preds = []
     for i, gen_ids in enumerate(generated):
         input_len = batch_inputs["input_ids"][i].shape[0]
@@ -286,7 +270,6 @@ def main():
         print("Nenhum resultado gerado (model dirs ausentes?).")
         return
 
-    # Flatten para CSV
     flat_rows = []
     for r in all_results:
         base = {k: v for k, v in r.items() if k not in ("per_class", "support")}
