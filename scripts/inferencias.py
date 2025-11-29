@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import os
 import time
 import json
@@ -16,10 +14,8 @@ try:
 except ImportError:
     PeftModel = None  
 
-# ===================== CONFIGURAÇÃO =====================
 BASE_MODEL_ID = "HuggingFaceTB/SmolVLM-256M-Instruct"
 
-# Diretórios genéricos (substitua pelos reais)
 MODEL_DIRS = {
     "text": "FT_text/SmolVLM_DIMEMEX_20251124_212719 ***",
     "image": "FT_image/SmolVLM_DIMEMEX_20251125_133530 ***",
@@ -184,7 +180,7 @@ def generate_batch(model, processor, batch_rows: List[Dict], mode: str) -> List[
         else:
             images.append([]) 
 
-    # CORREÇÃO: Passar o argumento 'images' para o processador SOMENTE se pelo menos uma amostra no batch atual realmente tiver imagens.
+    # Passar o argumento 'images' para o processador SOMENTE se pelo menos uma amostra no batch atual realmente tiver imagens.
     kwargs = {"text": texts, "return_tensors": "pt", "padding": True}
     
     if has_images_in_batch:
