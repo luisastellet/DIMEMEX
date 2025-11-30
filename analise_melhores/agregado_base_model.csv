@@ -1,0 +1,6 @@
+model,mode,total,correct,errors,accuracy,error_rate
+BASE_MODEL,image,64,17,47,26.5625,73.4375
+BASE_MODEL,text,64,17,47,26.5625,73.4375
+BASE_MODEL,text_description,64,20,44,31.25,68.75
+BASE_MODEL,text_description_image,64,16,48,25.0,75.0
+BASE_MODEL,AGREGADO,256,70,186,27.34375,72.65625

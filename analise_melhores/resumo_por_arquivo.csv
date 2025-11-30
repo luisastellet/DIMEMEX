@@ -1,0 +1,9 @@
+arquivo,model,mode,total,correct,errors,accuracy,error_rate
+predicoes_BASE_MODEL_image,BASE_MODEL,image,64,17,47,26.5625,73.4375
+predicoes_BASE_MODEL_text,BASE_MODEL,text,64,17,47,26.5625,73.4375
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,64,20,44,31.25,68.75
+predicoes_BASE_MODEL_text_description_image,BASE_MODEL,text_description_image,64,16,48,25.0,75.0
+predicoes_image_image,image,image,64,16,48,25.0,75.0
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,64,12,52,18.75,81.25
+predicoes_text_description_text_description,text_description,text_description,64,17,47,26.5625,73.4375
+predicoes_text_text,text,text,64,18,46,28.125,71.875

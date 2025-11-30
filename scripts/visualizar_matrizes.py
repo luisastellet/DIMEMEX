@@ -25,17 +25,18 @@ def plot_confusion_matrix(csv_path: str, output_path: str) -> None:
     
     cm = np.array(cm)
     
-    fig, ax = plt.subplots(figsize=(10, 8))
+    fig, ax = plt.subplots(figsize=(14, 12))
     
     im = ax.imshow(cm, cmap='Blues', aspect='auto')
     
     cbar = plt.colorbar(im, ax=ax)
-    cbar.set_label('Count', rotation=270, labelpad=20, fontsize=12, fontweight='bold')
+    cbar.set_label('Count', rotation=270, labelpad=30, fontsize=22, fontweight='bold')
+    cbar.ax.tick_params(labelsize=20)
     
     ax.set_xticks(range(len(labels)))
     ax.set_yticks(range(len(labels)))
-    ax.set_xticklabels(labels, fontsize=10)
-    ax.set_yticklabels(labels, fontsize=10)
+    ax.set_xticklabels(labels, fontsize=20, fontweight='bold')
+    ax.set_yticklabels(labels, fontsize=20, fontweight='bold')
     
     plt.setp(ax.get_xticklabels(), rotation=45, ha="right", rotation_mode="anchor")
     
@@ -43,13 +44,13 @@ def plot_confusion_matrix(csv_path: str, output_path: str) -> None:
         for j in range(len(labels)):
             text = ax.text(j, i, str(cm[i, j]),
                           ha="center", va="center", color="black" if cm[i, j] < cm.max()/2 else "white",
-                          fontsize=14, fontweight='bold')
+                          fontsize=24, fontweight='bold')
     
-    ax.set_xlabel('Predicted', fontsize=12, fontweight='bold')
-    ax.set_ylabel('True', fontsize=12, fontweight='bold')
+    ax.set_xlabel('Predicted', fontsize=22, fontweight='bold')
+    ax.set_ylabel('True', fontsize=22, fontweight='bold')
     
     plt.tight_layout()
-    plt.savefig(output_path, dpi=150, bbox_inches='tight')
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
     plt.close()
     
     print(f"✓ Gerado: {output_path}")

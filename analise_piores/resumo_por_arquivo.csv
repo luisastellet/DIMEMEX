@@ -1,0 +1,9 @@
+arquivo,model,mode,total,correct,errors,accuracy,error_rate
+predicoes_BASE_MODEL_image,BASE_MODEL,image,63,11,52,17.46031746031746,82.53968253968253
+predicoes_BASE_MODEL_text,BASE_MODEL,text,63,15,48,23.809523809523807,76.19047619047619
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,63,13,50,20.634920634920633,79.36507936507937
+predicoes_BASE_MODEL_text_description_image,BASE_MODEL,text_description_image,63,11,52,17.46031746031746,82.53968253968253
+predicoes_image_image,image,image,63,20,43,31.746031746031743,68.25396825396825
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,63,11,52,17.46031746031746,82.53968253968253
+predicoes_text_description_text_description,text_description,text_description,63,11,52,17.46031746031746,82.53968253968253
+predicoes_text_text,text,text,63,17,46,26.984126984126984,73.01587301587301

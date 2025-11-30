@@ -1,0 +1,44 @@
+arquivo,model,mode,ground_truth,prediction,count,pct_subset,pct_errors
+predicoes_BASE_MODEL_image,BASE_MODEL,image,hate speech,neither,39,61.904761904761905,75.0
+predicoes_BASE_MODEL_image,BASE_MODEL,image,neither,neither,11,17.46031746031746,100.0
+predicoes_BASE_MODEL_image,BASE_MODEL,image,inappropriate content,neither,12,19.047619047619047,23.076923076923077
+predicoes_BASE_MODEL_image,BASE_MODEL,image,inappropriate content,hate speech,1,1.5873015873015872,1.9230769230769231
+predicoes_BASE_MODEL_text,BASE_MODEL,text,hate speech,hate speech,4,6.349206349206349,100.0
+predicoes_BASE_MODEL_text,BASE_MODEL,text,hate speech,neither,35,55.55555555555556,72.91666666666666
+predicoes_BASE_MODEL_text,BASE_MODEL,text,neither,neither,11,17.46031746031746,100.0
+predicoes_BASE_MODEL_text,BASE_MODEL,text,inappropriate content,neither,13,20.634920634920633,27.083333333333332
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,hate speech,neither,35,55.55555555555556,70.0
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,neither,neither,9,14.285714285714285,100.0
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,hate speech,hate speech,4,6.349206349206349,100.0
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,inappropriate content,hate speech,3,4.761904761904762,6.0
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,inappropriate content,neither,10,15.873015873015872,20.0
+predicoes_BASE_MODEL_text_description,BASE_MODEL,text_description,neither,hate speech,2,3.1746031746031744,4.0
+predicoes_BASE_MODEL_text_description_image,BASE_MODEL,text_description_image,hate speech,neither,39,61.904761904761905,75.0
+predicoes_BASE_MODEL_text_description_image,BASE_MODEL,text_description_image,neither,neither,11,17.46031746031746,100.0
+predicoes_BASE_MODEL_text_description_image,BASE_MODEL,text_description_image,inappropriate content,neither,13,20.634920634920633,25.0
+predicoes_image_image,image,image,hate speech,hate speech,12,19.047619047619047,100.0
+predicoes_image_image,image,image,hate speech,neither,20,31.746031746031743,46.51162790697674
+predicoes_image_image,image,image,hate speech,inappropriate content,7,11.11111111111111,16.27906976744186
+predicoes_image_image,image,image,neither,neither,3,4.761904761904762,100.0
+predicoes_image_image,image,image,inappropriate content,hate speech,2,3.1746031746031744,4.651162790697675
+predicoes_image_image,image,image,inappropriate content,neither,6,9.523809523809524,13.953488372093023
+predicoes_image_image,image,image,neither,inappropriate content,6,9.523809523809524,13.953488372093023
+predicoes_image_image,image,image,inappropriate content,inappropriate content,5,7.936507936507936,100.0
+predicoes_image_image,image,image,neither,hate speech,2,3.1746031746031744,4.651162790697675
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,hate speech,neither,29,46.03174603174603,55.769230769230774
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,hate speech,inappropriate content,8,12.698412698412698,15.384615384615385
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,neither,inappropriate content,5,7.936507936507936,9.615384615384617
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,hate speech,hate speech,2,3.1746031746031744,100.0
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,neither,hate speech,1,1.5873015873015872,1.9230769230769231
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,inappropriate content,inappropriate content,4,6.349206349206349,100.0
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,neither,neither,5,7.936507936507936,100.0
+predicoes_text_description_image_text_description_image,text_description_image,text_description_image,inappropriate content,neither,9,14.285714285714285,17.307692307692307
+predicoes_text_description_text_description,text_description,text_description,hate speech,neither,39,61.904761904761905,75.0
+predicoes_text_description_text_description,text_description,text_description,neither,neither,11,17.46031746031746,100.0
+predicoes_text_description_text_description,text_description,text_description,inappropriate content,hate speech,1,1.5873015873015872,1.9230769230769231
+predicoes_text_description_text_description,text_description,text_description,inappropriate content,neither,12,19.047619047619047,23.076923076923077
+predicoes_text_text,text,text,hate speech,neither,32,50.79365079365079,69.56521739130434
+predicoes_text_text,text,text,hate speech,hate speech,7,11.11111111111111,100.0
+predicoes_text_text,text,text,neither,hate speech,1,1.5873015873015872,2.1739130434782608
+predicoes_text_text,text,text,neither,neither,10,15.873015873015872,100.0
+predicoes_text_text,text,text,inappropriate content,neither,13,20.634920634920633,28.26086956521739

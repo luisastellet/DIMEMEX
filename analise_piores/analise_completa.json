@@ -1,0 +1,609 @@
+{
+  "subset_size": 64,
+  "resumo_por_arquivo": [
+    {
+      "arquivo": "predicoes_BASE_MODEL_image",
+      "model": "BASE_MODEL",
+      "mode": "image",
+      "total": 63,
+      "correct": 11,
+      "errors": 52,
+      "accuracy": 17.46031746031746,
+      "error_rate": 82.53968253968253
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text",
+      "model": "BASE_MODEL",
+      "mode": "text",
+      "total": 63,
+      "correct": 15,
+      "errors": 48,
+      "accuracy": 23.809523809523807,
+      "error_rate": 76.19047619047619
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description",
+      "model": "BASE_MODEL",
+      "mode": "text_description",
+      "total": 63,
+      "correct": 13,
+      "errors": 50,
+      "accuracy": 20.634920634920633,
+      "error_rate": 79.36507936507937
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description_image",
+      "model": "BASE_MODEL",
+      "mode": "text_description_image",
+      "total": 63,
+      "correct": 11,
+      "errors": 52,
+      "accuracy": 17.46031746031746,
+      "error_rate": 82.53968253968253
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "total": 63,
+      "correct": 20,
+      "errors": 43,
+      "accuracy": 31.746031746031743,
+      "error_rate": 68.25396825396825
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "total": 63,
+      "correct": 11,
+      "errors": 52,
+      "accuracy": 17.46031746031746,
+      "error_rate": 82.53968253968253
+    },
+    {
+      "arquivo": "predicoes_text_description_text_description",
+      "model": "text_description",
+      "mode": "text_description",
+      "total": 63,
+      "correct": 11,
+      "errors": 52,
+      "accuracy": 17.46031746031746,
+      "error_rate": 82.53968253968253
+    },
+    {
+      "arquivo": "predicoes_text_text",
+      "model": "text",
+      "mode": "text",
+      "total": 63,
+      "correct": 17,
+      "errors": 46,
+      "accuracy": 26.984126984126984,
+      "error_rate": 73.01587301587301
+    }
+  ],
+  "pares": [
+    {
+      "arquivo": "predicoes_BASE_MODEL_image",
+      "model": "BASE_MODEL",
+      "mode": "image",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 39,
+      "pct_subset": 61.904761904761905,
+      "pct_errors": 75.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_image",
+      "model": "BASE_MODEL",
+      "mode": "image",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 11,
+      "pct_subset": 17.46031746031746,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_image",
+      "model": "BASE_MODEL",
+      "mode": "image",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 12,
+      "pct_subset": 19.047619047619047,
+      "pct_errors": 23.076923076923077
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_image",
+      "model": "BASE_MODEL",
+      "mode": "image",
+      "ground_truth": "inappropriate content",
+      "prediction": "hate speech",
+      "count": 1,
+      "pct_subset": 1.5873015873015872,
+      "pct_errors": 1.9230769230769231
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text",
+      "model": "BASE_MODEL",
+      "mode": "text",
+      "ground_truth": "hate speech",
+      "prediction": "hate speech",
+      "count": 4,
+      "pct_subset": 6.349206349206349,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text",
+      "model": "BASE_MODEL",
+      "mode": "text",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 35,
+      "pct_subset": 55.55555555555556,
+      "pct_errors": 72.91666666666666
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text",
+      "model": "BASE_MODEL",
+      "mode": "text",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 11,
+      "pct_subset": 17.46031746031746,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text",
+      "model": "BASE_MODEL",
+      "mode": "text",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 13,
+      "pct_subset": 20.634920634920633,
+      "pct_errors": 27.083333333333332
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description",
+      "model": "BASE_MODEL",
+      "mode": "text_description",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 35,
+      "pct_subset": 55.55555555555556,
+      "pct_errors": 70.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description",
+      "model": "BASE_MODEL",
+      "mode": "text_description",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 9,
+      "pct_subset": 14.285714285714285,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description",
+      "model": "BASE_MODEL",
+      "mode": "text_description",
+      "ground_truth": "hate speech",
+      "prediction": "hate speech",
+      "count": 4,
+      "pct_subset": 6.349206349206349,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description",
+      "model": "BASE_MODEL",
+      "mode": "text_description",
+      "ground_truth": "inappropriate content",
+      "prediction": "hate speech",
+      "count": 3,
+      "pct_subset": 4.761904761904762,
+      "pct_errors": 6.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description",
+      "model": "BASE_MODEL",
+      "mode": "text_description",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 10,
+      "pct_subset": 15.873015873015872,
+      "pct_errors": 20.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description",
+      "model": "BASE_MODEL",
+      "mode": "text_description",
+      "ground_truth": "neither",
+      "prediction": "hate speech",
+      "count": 2,
+      "pct_subset": 3.1746031746031744,
+      "pct_errors": 4.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description_image",
+      "model": "BASE_MODEL",
+      "mode": "text_description_image",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 39,
+      "pct_subset": 61.904761904761905,
+      "pct_errors": 75.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description_image",
+      "model": "BASE_MODEL",
+      "mode": "text_description_image",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 11,
+      "pct_subset": 17.46031746031746,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_BASE_MODEL_text_description_image",
+      "model": "BASE_MODEL",
+      "mode": "text_description_image",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 13,
+      "pct_subset": 20.634920634920633,
+      "pct_errors": 25.0
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "hate speech",
+      "prediction": "hate speech",
+      "count": 12,
+      "pct_subset": 19.047619047619047,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 20,
+      "pct_subset": 31.746031746031743,
+      "pct_errors": 46.51162790697674
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "hate speech",
+      "prediction": "inappropriate content",
+      "count": 7,
+      "pct_subset": 11.11111111111111,
+      "pct_errors": 16.27906976744186
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 3,
+      "pct_subset": 4.761904761904762,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "inappropriate content",
+      "prediction": "hate speech",
+      "count": 2,
+      "pct_subset": 3.1746031746031744,
+      "pct_errors": 4.651162790697675
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 6,
+      "pct_subset": 9.523809523809524,
+      "pct_errors": 13.953488372093023
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "neither",
+      "prediction": "inappropriate content",
+      "count": 6,
+      "pct_subset": 9.523809523809524,
+      "pct_errors": 13.953488372093023
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "inappropriate content",
+      "prediction": "inappropriate content",
+      "count": 5,
+      "pct_subset": 7.936507936507936,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_image_image",
+      "model": "image",
+      "mode": "image",
+      "ground_truth": "neither",
+      "prediction": "hate speech",
+      "count": 2,
+      "pct_subset": 3.1746031746031744,
+      "pct_errors": 4.651162790697675
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 29,
+      "pct_subset": 46.03174603174603,
+      "pct_errors": 55.769230769230774
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "hate speech",
+      "prediction": "inappropriate content",
+      "count": 8,
+      "pct_subset": 12.698412698412698,
+      "pct_errors": 15.384615384615385
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "neither",
+      "prediction": "inappropriate content",
+      "count": 5,
+      "pct_subset": 7.936507936507936,
+      "pct_errors": 9.615384615384617
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "hate speech",
+      "prediction": "hate speech",
+      "count": 2,
+      "pct_subset": 3.1746031746031744,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "neither",
+      "prediction": "hate speech",
+      "count": 1,
+      "pct_subset": 1.5873015873015872,
+      "pct_errors": 1.9230769230769231
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "inappropriate content",
+      "prediction": "inappropriate content",
+      "count": 4,
+      "pct_subset": 6.349206349206349,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 5,
+      "pct_subset": 7.936507936507936,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_text_description_image_text_description_image",
+      "model": "text_description_image",
+      "mode": "text_description_image",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 9,
+      "pct_subset": 14.285714285714285,
+      "pct_errors": 17.307692307692307
+    },
+    {
+      "arquivo": "predicoes_text_description_text_description",
+      "model": "text_description",
+      "mode": "text_description",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 39,
+      "pct_subset": 61.904761904761905,
+      "pct_errors": 75.0
+    },
+    {
+      "arquivo": "predicoes_text_description_text_description",
+      "model": "text_description",
+      "mode": "text_description",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 11,
+      "pct_subset": 17.46031746031746,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_text_description_text_description",
+      "model": "text_description",
+      "mode": "text_description",
+      "ground_truth": "inappropriate content",
+      "prediction": "hate speech",
+      "count": 1,
+      "pct_subset": 1.5873015873015872,
+      "pct_errors": 1.9230769230769231
+    },
+    {
+      "arquivo": "predicoes_text_description_text_description",
+      "model": "text_description",
+      "mode": "text_description",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 12,
+      "pct_subset": 19.047619047619047,
+      "pct_errors": 23.076923076923077
+    },
+    {
+      "arquivo": "predicoes_text_text",
+      "model": "text",
+      "mode": "text",
+      "ground_truth": "hate speech",
+      "prediction": "neither",
+      "count": 32,
+      "pct_subset": 50.79365079365079,
+      "pct_errors": 69.56521739130434
+    },
+    {
+      "arquivo": "predicoes_text_text",
+      "model": "text",
+      "mode": "text",
+      "ground_truth": "hate speech",
+      "prediction": "hate speech",
+      "count": 7,
+      "pct_subset": 11.11111111111111,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_text_text",
+      "model": "text",
+      "mode": "text",
+      "ground_truth": "neither",
+      "prediction": "hate speech",
+      "count": 1,
+      "pct_subset": 1.5873015873015872,
+      "pct_errors": 2.1739130434782608
+    },
+    {
+      "arquivo": "predicoes_text_text",
+      "model": "text",
+      "mode": "text",
+      "ground_truth": "neither",
+      "prediction": "neither",
+      "count": 10,
+      "pct_subset": 15.873015873015872,
+      "pct_errors": 100.0
+    },
+    {
+      "arquivo": "predicoes_text_text",
+      "model": "text",
+      "mode": "text",
+      "ground_truth": "inappropriate content",
+      "prediction": "neither",
+      "count": 13,
+      "pct_subset": 20.634920634920633,
+      "pct_errors": 28.26086956521739
+    }
+  ],
+  "modelos": {
+    "BASE_MODEL": [
+      {
+        "arquivo": "predicoes_BASE_MODEL_image",
+        "model": "BASE_MODEL",
+        "mode": "image",
+        "total": 63,
+        "correct": 11,
+        "errors": 52,
+        "accuracy": 17.46031746031746,
+        "error_rate": 82.53968253968253
+      },
+      {
+        "arquivo": "predicoes_BASE_MODEL_text",
+        "model": "BASE_MODEL",
+        "mode": "text",
+        "total": 63,
+        "correct": 15,
+        "errors": 48,
+        "accuracy": 23.809523809523807,
+        "error_rate": 76.19047619047619
+      },
+      {
+        "arquivo": "predicoes_BASE_MODEL_text_description",
+        "model": "BASE_MODEL",
+        "mode": "text_description",
+        "total": 63,
+        "correct": 13,
+        "errors": 50,
+        "accuracy": 20.634920634920633,
+        "error_rate": 79.36507936507937
+      },
+      {
+        "arquivo": "predicoes_BASE_MODEL_text_description_image",
+        "model": "BASE_MODEL",
+        "mode": "text_description_image",
+        "total": 63,
+        "correct": 11,
+        "errors": 52,
+        "accuracy": 17.46031746031746,
+        "error_rate": 82.53968253968253
+      }
+    ],
+    "image": [
+      {
+        "arquivo": "predicoes_image_image",
+        "model": "image",
+        "mode": "image",
+        "total": 63,
+        "correct": 20,
+        "errors": 43,
+        "accuracy": 31.746031746031743,
+        "error_rate": 68.25396825396825
+      }
+    ],
+    "text_description_image": [
+      {
+        "arquivo": "predicoes_text_description_image_text_description_image",
+        "model": "text_description_image",
+        "mode": "text_description_image",
+        "total": 63,
+        "correct": 11,
+        "errors": 52,
+        "accuracy": 17.46031746031746,
+        "error_rate": 82.53968253968253
+      }
+    ],
+    "text_description": [
+      {
+        "arquivo": "predicoes_text_description_text_description",
+        "model": "text_description",
+        "mode": "text_description",
+        "total": 63,
+        "correct": 11,
+        "errors": 52,
+        "accuracy": 17.46031746031746,
+        "error_rate": 82.53968253968253
+      }
+    ],
+    "text": [
+      {
+        "arquivo": "predicoes_text_text",
+        "model": "text",
+        "mode": "text",
+        "total": 63,
+        "correct": 17,
+        "errors": 46,
+        "accuracy": 26.984126984126984,
+        "error_rate": 73.01587301587301
+      }
+    ]
+  }
+}

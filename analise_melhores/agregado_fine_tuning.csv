@@ -1,0 +1,6 @@
+model,mode,total,correct,errors,accuracy,error_rate
+text,text,64,18,46,28.125,71.875
+image,image,64,16,48,25.0,75.0
+text_description,text_description,64,17,47,26.5625,73.4375
+text_description_image,text_description_image,64,12,52,18.75,81.25
+FINE_TUNING,AGREGADO,256,63,193,24.609375,75.390625
