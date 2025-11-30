@@ -74,8 +74,10 @@ def apply():
 
         n_cases = max(1, int(len(df_rank) * percentage))
     
-        better_cases = df_rank.nlargest(n_cases, final_rank_value)
-        worse_cases = df_rank.nsmallest(n_cases, final_rank_value)
+        # Menor soma de ranks = melhor (melhores métricas de tradução)
+        better_cases = df_rank.nsmallest(n_cases, final_rank_value)
+        # Maior soma de ranks = pior (piores métricas de tradução)
+        worse_cases = df_rank.nlargest(n_cases, final_rank_value)
         
         
         ####### INCLUDING FULL DATA FOR BETTER AND WORSE CASES ########
